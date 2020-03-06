@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container">
+		<div class="row">
+			<form class="form-horizontal" th:action="@{/motherboard/add}" method="post"
+				enctype="multipart/form-data">
+				<fieldset>
+					<legend class="center-block">
+						Unos nove maticne ploce <span style="font-size: small"> *je obavezno polje</span>
+					</legend>
+
+
+					<!-- title -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="title">* Ime</label>
+
+						<div class="col-md-8">
+							<input type="text" name="title" class="form-control" id="title"
+								th:value="${motherboard.title}" required="required" placeholder="Ime" />
+							<span class="help-block">Ime proizvoda</span>
+						</div>
+					</div>
+
+					<!-- author -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="manufacturer">*
+							Proizvodjac</label>
+						<div class="col-md-8">
+							<input type="text" name="manufacturer" class="form-control" id="manufacturer"
+								th:value="${motherboard.manufacturer}" required="required"
+								placeholder="Proizvodjac" /> <span class="help-block">Ime kompanije koja je proizvela ovaj proizvod</span>
+						</div>
+					</div>
+
+					<!-- publisher -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="socket">*Socket</label>
+						<div class="col-md-8">
+							<input type="text" name="socket" class="form-control" required="required"
+								id="socket" th:value="${motherboard.socket}"
+								placeholder="Socket" /> <span class="help-block">Socket za procesor</span>
+						</div>
+					</div>
+					
+					
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="chipset">*Chipset</label>
+						<div class="col-md-8">
+							<input type="text" name="chipset" class="form-control" required="required"
+								id="chipset" th:value="${motherboard.chipset}"
+								placeholder="Chipset" /> 
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="memory_operation_mode">*Rezim rada memorije</label>
+						<div class="col-md-8">
+							<input type="text" name="memory_operation_mode" class="form-control" required="required"
+								id="memory_operation_mode" th:value="${motherboard.memory_operation_mode}"
+								placeholder="Rezim rada memorije" /> 
+						</div>
+					</div>
+					
+					
+					
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="number_of_pci_sixteen">Broj PCx16:</label>
+						<div class="col-md-8">
+							<input th:value="${motherboard.number_of_pci_sixteen}" type="number"
+								name="number_of_pci_sixteen" class="form-control" id="number_of_pci_sixteen"> </input>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="number_of_pci_eigth">Broj PCx8:</label>
+						<div class="col-md-8">
+							<input th:value="${motherboard.number_of_pci_eigth}" type="number"
+								name="number_of_pci_eigth" class="form-control" id="number_of_pci_eigth"> </input>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="number_of_pci_four">Broj PCx4:</label>
+						<div class="col-md-8">
+							<input th:value="${motherboard.number_of_pci_four}" type="number"
+								name="number_of_pci_four" class="form-control" id="number_of_pci_four"> </input>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="number_of_sata">Broj Sata portova:</label>
+						<div class="col-md-8">
+							<input th:value="${motherboard.number_of_sata}" type="number"
+								name="number_of_sata" class="form-control" id="number_of_sata"> </input>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="firewire">*Firewire</label>
+						<div class="col-md-8">
+							<input type="text" name="firewire" class="form-control" required="required"
+								id="firewire;" th:value="${motherboard.firewire}"
+								placeholder="Firewire" />
+						</div>
+					</div>
+					
+					
+					<!-- publisher -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="warranty">*Garancija</label>
+						<div class="col-md-8">
+							<input type="text" name="warranty" class="form-control" required="required"
+								id="warranty" th:value="${motherboard.warranty}"
+								placeholder="Koliko godina garancije za proizvod"></input>
+						</div>
+					</div>
+
+
+					<!-- list price -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="listPrice">Trzisna cena</label>
+						<div class="col-md-8">
+							<div class="input-group">
+								<span class="input-group-addon">RSD</span> <input
+									th:value="${motherboard.listPrice}" type="number" name="listPrice" step="0.01"
+									class="form-control" id="listPrice" placeholder="List Price" />
+							</div>
+							<span class="help-block">Cena proizvoda-trzisna</span>
+						</div>
+					</div>
+
+					<!-- our price -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="ourPrice">Nasa cena</label>
+						<div class="col-md-8">
+							<div class="input-group">
+								<span class="input-group-addon">RSD</span> <input
+									th:value="${motherboard.ourPrice}" type="number" name="ourPrice" step="0.01"
+									class="form-control" id="ourPrice" placeholder="Our Price" />
+							</div>
+							<span class="help-block">Nasa cena proizvoda</span>
+						</div>
+					</div>
+
+					<!-- in stock number -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="inStockNumber">Kolicna proizvoda</label>
+						<div class="col-md-8">
+							<input th:value="${motherboard.inStockNumber}" type="number"
+								name="inStockNumber" class="form-control" id="inStockNumber"
+								placeholder="" /> <span
+								class="help-block">Kolicina proizvoda dostupna u magacinu</span>
+						</div>
+					</div>
+
+					<!-- status of book -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="status">Status</label>
+						<div class="col-md-8">
+							<label><input value="true" type="radio" name="active"
+								checked="checked" /> Active </label> <label><input
+								value="false" type="radio" name="active" />
+								Inactive </label> <span class="help-block">Da li je ovaj prozvod dostupan</span>
+						</div>
+					</div>
+
+					<!-- description -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="description">Opis</label>
+						<div class="col-md-8">
+							<textarea name="description" rows="5" class="form-control"
+								id="description" th:value="${motherboard.description}"
+								placeholder="Description" ></textarea>
+							<span class="help-block">Opis proizvoda</span>
+						</div>
+					</div>
+
+					<!-- upload image -->
+					<div class="form-group">
+						<div class="col-md-2">
+							<label for="motherboardImage">Uploaduj sliku</label>
+						</div>
+						<div class="col-md-8">
+							<input id="laptopImage" type="file" name="laptopImage"
+								th:value="${motherboard.laptopImage}" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-2"></div>
+						<div class="col-md-8">
+							<button type="submit" class="btn btn-success">Dodaj</button>
+							<a class="btn btn-danger" th:href="@{/}">Cancel</a>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

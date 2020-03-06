@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container">
+		<div class="row">
+			<form class="form-horizontal" th:action="@{/graphics_card/add}" method="post"
+				enctype="multipart/form-data">
+				<fieldset>
+					<legend class="center-block">
+						Unos nove graficke<span style="font-size: small"> *je obavezno polje</span>
+					</legend>
+
+
+					<!-- title -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="title">* Ime</label>
+
+						<div class="col-md-8">
+							<input type="text" name="title" class="form-control" id="title"
+								th:value="${graphics_card.title}" required="required" placeholder="Ime" />
+							<span class="help-block">Ime proizvoda</span>
+						</div>
+					</div>
+
+					<!-- author -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="manufacturer">*
+							Proizvodjac</label>
+						<div class="col-md-8">
+							<input type="text" name="manufacturer" class="form-control" id="manufacturer"
+								th:value="${graphics_card.manufacturer}" required="required"
+								placeholder="Proizvodjac" /> <span class="help-block">Ime kompanije koja je proizvela ovaj proizvod</span>
+						</div>
+					</div>
+
+					<!-- publisher -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="graphics_interface">*Graficki interfejs</label>
+						<div class="col-md-8">
+							<input type="text" name="graphics_interface" class="form-control" required="required"
+								id="graphics_interface" th:value="${graphics_card.graphics_interface}"
+								placeholder="Graficki interfejs" />
+						</div>
+					</div>
+					
+					
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="clock_memory">*Brzina memorije</label>
+						<div class="col-md-8">
+							<input type="text" name="clock_memory" class="form-control" required="required"
+								id="clock_memory" th:value="${graphics_card.clock_memory}"
+								placeholder="Brzina memorije" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="clock_processor">*Brzina procesora</label>
+						<div class="col-md-8">
+							<input type="text" name="clock_processor" class="form-control" required="required"
+								id="clock_processor" th:value="${graphics_card.clock_processor}"
+								placeholder="Brzina procesora" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="type_of_memory">*Vrsta memorije</label>
+						<div class="col-md-8">
+							<input type="text" name="type_of_memory" class="form-control" required="required"
+								id="type_of_memory" th:value="${graphics_card.type_of_memory}"
+								placeholder="Vrsta memorije" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="capacity_of_memory">*Kapacitet memorije</label>
+						<div class="col-md-8">
+							<input type="text" name="capacity_of_memory" class="form-control" required="required"
+								id="capacity_of_memory" th:value="${graphics_card.capacity_of_memory}"
+								placeholder="Kapacitet memorije" />
+						</div>
+					</div>
+					
+					
+							
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="number_of_hdmi">Broj hdmi-a:</label>
+						<div class="col-md-8">
+							<input th:value="${graphics_card.number_of_hdmi}" type="number"
+								name="number_of_hdmi" class="form-control" id="number_of_hdmi"> </input>
+						</div>
+					</div>
+					
+					
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="number_of_vga">Broj vga:</label>
+						<div class="col-md-8">
+							<input th:value="${graphics_card.number_of_vga}" type="number"
+								name="number_of_vga" class="form-control" id="number_of_vga"> </input>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="number_of_display_port">Broj displej portova:</label>
+						<div class="col-md-8">
+							<input th:value="${graphics_card.number_of_display_port}" type="number"
+								name="number_of_display_port" class="form-control" id="number_of_display_port"> </input>
+						</div>
+					</div>
+					
+					
+							
+					<!-- publisher -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="warranty">*Garancija</label>
+						<div class="col-md-8">
+							<input type="text" name="warranty" class="form-control" required="required"
+								id="warranty" th:value="${graphics_card.warranty}"
+								placeholder="Koliko godina garancije za proizvod"></input>
+						</div>
+					</div>
+
+
+					<!-- list price -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="listPrice">Trzisna cena</label>
+						<div class="col-md-8">
+							<div class="input-group">
+								<span class="input-group-addon">RSD</span> <input
+									th:value="${graphics_card.listPrice}" type="number" name="listPrice" step="0.01"
+									class="form-control" id="listPrice" placeholder="List Price" />
+							</div>
+							<span class="help-block">Cena proizvoda-trzisna</span>
+						</div>
+					</div>
+
+					<!-- our price -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="ourPrice">Nasa cena</label>
+						<div class="col-md-8">
+							<div class="input-group">
+								<span class="input-group-addon">RSD</span> <input
+									th:value="${graphics_card.ourPrice}" type="number" name="ourPrice" step="0.01"
+									class="form-control" id="ourPrice" placeholder="Our Price" />
+							</div>
+							<span class="help-block">Nasa cena proizvoda</span>
+						</div>
+					</div>
+
+					<!-- in stock number -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="inStockNumber">Kolicna proizvoda</label>
+						<div class="col-md-8">
+							<input th:value="${graphics_card.inStockNumber}" type="number"
+								name="inStockNumber" class="form-control" id="inStockNumber"
+								placeholder="" /> <span
+								class="help-block">Kolicina proizvoda dostupna u magacinu</span>
+						</div>
+					</div>
+
+					<!-- status of book -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="status">Status</label>
+						<div class="col-md-8">
+							<label><input value="true" type="radio" name="active"
+								checked="checked" /> Active </label> <label><input
+								value="false" type="radio" name="active" />
+								Inactive </label> <span class="help-block">Da li je ovaj prozvod dostupan</span>
+						</div>
+					</div>
+
+					<!-- description -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="description">Opis</label>
+						<div class="col-md-8">
+							<textarea name="description" rows="5" class="form-control"
+								id="description" th:value="${graphics_card.description}"
+								placeholder="Description" ></textarea>
+							<span class="help-block">Opis proizvoda</span>
+						</div>
+					</div>
+
+					<!-- upload image -->
+					<div class="form-group">
+						<div class="col-md-2">
+							<label for="GraphicsImage">Uploaduj sliku</label>
+						</div>
+						<div class="col-md-8">
+							<input id="GraphicsImage" type="file" name="GraphicsImage"
+								th:value="${graphics_card.GraphicsImage}" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-2"></div>
+						<div class="col-md-8">
+							<button type="submit" class="btn btn-success">Dodaj</button>
+							<a class="btn btn-danger" th:href="@{/}">Cancel</a>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

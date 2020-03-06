@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="sr" xmlns:th="http://www.w3.org/1999/xhtml"
+	xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+<title>GamingShop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- Bootstrap -->
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
+
+</head>
+
+
+<body>
+	<p>
+		Postovani, <span th:text="${user.ime}"></span>
+	</p>
+	<p>Vasa roba je poslata, hvala vam na ukazanom poverenju!</p>
+	<p>
+		Broj porudzbine je:: <strong>#<span th:text="${order.id}"></span></strong>
+	</p>
+	<hr />
+
+
+	<br />
+	<p>Vas,</p>
+	<p>Gaminshop</p>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="sr" xmlns:th="http://www.w3.org/1999/xhtml"
+	xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+<title>GamingShop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- Bootstrap -->
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/header.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/moj.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/fontawesome-all.css}" />
+</head>
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container-fluid" style="min-height: 700px;">
+		<div class="" style="">
+			<form th:action="@{/shoppingCart/addItem/pc_case}" method="post">
+				<input hidden="hidden" th:field="*{pc_case.id}" />
+				<!-- <input hidden="hidden" th:field="*{pc_case.manufacturer}" value="procesori"></input> -->
+				<div class="row" style="margin-top: 8%;">
+					<div class="col-4">
+						<a th:href="@{/offers/pc_case}"
+							style="font-weight: bold; font-size: large; display: block;">Vrati
+							se nazad u ponude</a> <img class="img-responsive shelf-pc_case"
+							th:src="'https://springtestbyigy97.azurewebsites.net'+'/images/pc_case/'+${pc_case.id}+'.jpg'"
+							style="width: 100%;" />
+
+					</div>
+
+					<div class="col-8">
+						<h3>
+							<span th:if="${cardSuccess}" style="color: forestgreen"><i
+								class="fa fa-check" aria-hidden="true"
+								style="color: forestgreen"></i>Dodato u korpu.</span>
+						</h3>
+						<h3>
+							<span th:if="${notEnoughStock}" style="color: red">Ukupno
+								je ostalo: <span th:text="${pc_case.inStockNumber}"></span> na
+								lageru.
+							</span>
+						</h3>
+						<h3 th:text="${pc_case.title}" style="margin-bottom: 2%;"></h3>
+						<div class="row">
+							<div class="col-6">
+								<h5>
+									<strong>Proizvodjac: </strong><span
+										th:text="${pc_case.manufacturer}"></span>
+								</h5>
+								<p>
+									<strong>Tip kucista: </strong><span
+										th:text="${pc_case.type_of_case}"></span>
+								</p>
+								<p>
+									<strong>Tip za maticnu plocu: </strong><span
+										th:text="${pc_case.type_of_motherboard}"></span>
+								</p>
+								<p>
+									<strong>Providna strana</strong><span
+										th:text="${pc_case.transparent_side}"></span>
+								</p>
+								<p>
+									<strong>Materijal: </strong><span th:text="${pc_case.material}"></span>
+								</p>
+								<p>
+									<strong>Broj usb-a: </strong><span
+										th:text="${pc_case.number_of_usb}"></span>
+								</p>
+								<p>
+									<strong>Garancija: </strong><span th:text="${pc_case.warranty}"></span>
+								</p>
+							</div>
+
+							<div class="col-6">
+								<div class="panel panel-default"
+									style="border-width: 5px; margin-top: 20px;">
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-12">
+												<h4>
+													Nasa cena: <span style="color: #db3208;"><span
+														th:text="${pc_case.ourPrice} + 'RSD'"></span></span>
+												</h4>
+												<p>
+													Trzisna cena: <span style="text-decoration: line-through"><span
+														th:text="${pc_case.listPrice + 'RSD'}"></span></span>
+												</p>
+												<p>
+													Ukupno ste ustedeli: <span
+														th:text="${#numbers.formatDecimal((pc_case.listPrice - pc_case.ourPrice), 0, 'COMMA', 2, 'POINT' ) + 'RSD'}"></span>
+												</p>
+												<span>Kolicina: </span> <select name="qty">
+													<option th:each="qty : ${qtyList}" th:value="${qty}"
+														th:text="${qty}"></option>
+												</select>
+											</div>
+											<div class="col-12 mt-3">
+												<h4 th:if="*{pc_case.inStockNumber&gt;10}"
+													style="color: green">Na lageru</h4>
+												<h4
+													th:if="*{pc_case.inStockNumber&lt;10 and pc_case.inStockNumber&gt;0}"
+													style="color: green">
+													Ostalo je jos: <span th:text="${pc_case.inStockNumber}">
+													</span>
+												</h4>
+												<h4 th:if="*{pc_case.inStockNumber==0}"
+													style="color: darkred;">Nije na lageru</h4>
+												<button type="submit" class="btn btn-primary"
+													style="padding: 10px 40px 10px 40px; width: 90%;">Dodaj
+													u korpu</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<hr />
+						<p th:utext="${pc_case.description}"></p>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- end of container -->
+	<div th:replace="common/header :: footer" />
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

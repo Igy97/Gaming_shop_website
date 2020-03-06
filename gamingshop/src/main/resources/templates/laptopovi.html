@@ -1,0 +1,427 @@
+<head>
+<title>GamingShop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- Bootstrap -->
+
+
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="/css/header.css">
+<link rel="stylesheet" type="text/css" href="/css/laptopovi.css">
+<link rel="stylesheet" type="text/css" href="/css/fontawesome-all.css">
+<!-- <link href="/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="/css/dataTables.bootstrap.min.css" rel="stylesheet" /> -->
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css" />
+
+
+</head>
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="odvoj_od_menija" style="min-height: 700px;">
+
+		<div class="row m-0">
+			<div class="col-md-3 col-sm-12">
+				<a href="#"
+					class="d-sm-block d-md-none btn btn-primary font-weight-bold"
+					onclick="funkcija()"
+					style="width: 100%; margin-bottom: 2%; border-radius: 0px;">Filter:</a>
+				<div id="standard">
+					<h2 class="ml-3 d-none d-md-block">Filter:</h2>
+					<div class="col-12">
+						<button class="btn btn-primary filter" data-toggle="collapse"
+							data-target="#demo">Cena:</button>
+						<div id="demo" class="collapse" style="margin-top: 2%;">
+							<label for="inputEmail4" class="labela"> Min cena: </label> <input
+								type="text" class="form-control" id="inputEmail4"> <label
+								for="inputEmail4 labela" class="labela"> Max cena: </label> <input
+								type="text" class="form-control" id="inputEmail4">
+						</div>
+					</div>
+
+					<div class="col-12">
+						<button class="btn btn-primary filter" data-toggle="collapse"
+							data-target="#demo2">Raspoloživost:</button>
+						<div id="demo2" class="collapse">
+							<div class="form-group">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> Na
+										stanju </label>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-12">
+						<button class="btn btn-primary filter" data-toggle="collapse"
+							data-target="#demo3">Proizvođač:</button>
+						<div id="demo3" class="collapse">
+							<div class="form-group">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> Acer </label>
+									<br> <input class="form-check-input" type="checkbox"
+										id="gridCheck"> <label class="form-check-label"
+										for="gridCheck"> Asus </label> <br> <input
+										class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck">
+										Samsung </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> Dell </label> <br>
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> Lenovo
+									</label> <br> <input class="form-check-input" type="checkbox"
+										id="gridCheck"> <label class="form-check-label"
+										for="gridCheck"> HP </label>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-12">
+						<button class="btn btn-primary filter" data-toggle="collapse"
+							data-target="#demo4">Veličina ekrana:</button>
+						<div id="demo4" class="collapse">
+							<div class="form-group">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> 10.1"
+									</label> <br> <input class="form-check-input" type="checkbox"
+										id="gridCheck"> <label class="form-check-label"
+										for="gridCheck"> 11.1" </label> <br> <input
+										class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> 12.1"
+									</label> <br> <input class="form-check-input" type="checkbox"
+										id="gridCheck"> <label class="form-check-label"
+										for="gridCheck"> 13.1" </label> <br> <input
+										class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> 14.1"
+									</label> <br> <input class="form-check-input" type="checkbox"
+										id="gridCheck"> <label class="form-check-label"
+										for="gridCheck"> 15.1" </label>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-12">
+						<button class="btn btn-primary filter" data-toggle="collapse"
+							data-target="#demo5">Rezolucija ekrana:</button>
+						<div id="demo5" class="collapse">
+							<div class="form-group">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck">
+										1280x800 </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> 1366x768 </label> <br>
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck">
+										1600x900 </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> 1920x1080 </label> <br>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="col-12">
+						<button class="btn btn-primary filter" data-toggle="collapse"
+							data-target="#demo6">Procesor:</button>
+						<div id="demo6" class="collapse">
+							<div class="form-group">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> AMD
+										Ryzen 7 1700 </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> Intel
+										Celeron N2840 </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> Intel Core
+										i3-7130U </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> Intel Core
+										i3-7100U </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> Intel Core
+										i5-7300HQ </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> Intel Core
+										i5-7300U </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> Intel Core
+										i5-8250U </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> Intel Core
+										i7-4710HQ </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> Intel Core
+										i7-4712MQ </label> <br>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+					<div class="col-12">
+						<button class="btn btn-primary filter" data-toggle="collapse"
+							data-target="#demo7">Ram memorija:</button>
+						<div id="demo7" class="collapse">
+							<div class="form-group">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> 4GB </label> <br>
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> 8GB </label> <br>
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> 12GB </label>
+									<br> <input class="form-check-input" type="checkbox"
+										id="gridCheck"> <label class="form-check-label"
+										for="gridCheck"> 16GB </label> <br>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-12">
+						<button class="btn btn-primary filter" data-toggle="collapse"
+							data-target="#demo8">Veličina HDD-a:</button>
+						<div id="demo8" class="collapse">
+							<div class="form-group">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> 1TB </label> <br>
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> 2TB </label> <br>
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> 3TB </label> <br>
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> 4TB </label> <br>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-12">
+						<button class="btn btn-primary filter" data-toggle="collapse"
+							data-target="#demo9">Vrsta HDD-a:</button>
+						<div id="demo9" class="collapse">
+							<div class="form-group">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> SSD </label> <br>
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> HDD </label> <br>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="col-12">
+						<button class="btn btn-primary filter" data-toggle="collapse"
+							data-target="#demo10">Baterija:</button>
+						<div id="demo10" class="collapse">
+							<div class="form-group">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> 2
+										celije </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> 3 celije </label> <br>
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> 4
+										celije </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> 8 celija </label> <br>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-12">
+						<button class="btn btn-primary filter" data-toggle="collapse"
+							data-target="#demo11">Grafička karta:</button>
+						<div id="demo11" class="collapse">
+							<div class="form-group">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> AMD
+										FirePro W5130M 2GB DDR5 </label> <br> <input
+										class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> AMD HD
+										R7 M270 4GB DDR3 </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> AMD R5 M230
+										2 GB DDR3 </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> AMD Radeon
+										R17M-M1-70 2G </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> AMD Radeon
+										R6 </label> <br> <input class="form-check-input" type="checkbox"
+										id="gridCheck"> <label class="form-check-label"
+										for="gridCheck"> AMD Radeon R9 M385 4GB DDR5 </label> <br>
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> nVIDIA
+										GF 820M 1GB DDR3 </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> nVIDIA GF
+										920M 2GB DDR3 </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> nVIDIA GF
+										920MX 2GB DDR5 </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> nVIDIA GF
+										940MX 4GB DDR5 </label> <br>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-12">
+						<button class="btn btn-primary filter" data-toggle="collapse"
+							data-target="#demo12">Garantni rok:</button>
+						<div id="demo12" class="collapse">
+							<div class="form-group">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> 1
+										godina </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> 2 godine </label> <br>
+									<input class="form-check-input" type="checkbox" id="gridCheck">
+									<label class="form-check-label" for="gridCheck"> 3
+										godine </label> <br> <input class="form-check-input"
+										type="checkbox" id="gridCheck"> <label
+										class="form-check-label" for="gridCheck"> 4 godine </label> <br>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col-md-9 col-sm-12">
+				<div class=" m-0">
+					<table border="0" id="laptopList" style="width: 100%;">
+						<thead>
+							<tr>
+								<th></th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr class="laptop-item" data-th-each="laptop : ${laptopList}">
+								<td>
+									<div th:if="${laptop != null}">
+										<div class="col-12 mt-3">
+											<div class="card text-center">
+												<div class="card-header">
+													<h3 class="card-title" th:text="${laptop.title}"></h3>
+												</div>
+												<div class="card-body pt-0">
+													<div class="row">
+														<div class="col-md-4 col-sm-12">
+															<img class="img-fluid"
+																th:src="'https://springtestbyigy97.azurewebsites.net'+'/images/laptop/'+${laptop.id}+'.jpg'"
+																alt="Card image cap" style="margin-top: 15%">
+														</div>
+														<div class="col-md-4 col-sm-12" style="margin-top: 5%;">
+															<p class="card-text text-justify tekst_paragraf"
+																th:utext="'PROIZVODJAC:' + ${laptop.manufacturer} + '<br>' +
+														'Velicina ekrana:' +  ${laptop.display} + '<br>' + 
+														'Procesor:' +  ${laptop.processor} + '<br>' + 
+														'Količina ram memorije:' +  ${laptop.Ram} + '<br>' + 
+														'Veličina HDD-a:' +  ${laptop.hdd} + '<br>' + 
+														'Garantni rok:' +  ${laptop.warranty} + '<br>' 													
+														">
+															</p>
+														</div>
+														<div class="col-md-4 col-sm-12 odvajanje">
+															<div class="row">
+																<div class="col-12 dugme">
+																	<a href="#" class="btn btn-primary"><span><span
+																			th:text="${#numbers.formatDecimal(laptop.ourPrice, 0 , 'COMMA', 2, 'POINT')} + 'RSD'"></span></span>
+
+																		<span
+																		style="text-decoration: line-through; font-size: 1.1vw;"><span
+																			th:text="${#numbers.formatDecimal(laptop.listPrice, 0 , 'COMMA', 2, 'POINT')  + 'RSD'}"></span></span>
+
+																	</a>
+																</div>
+
+																<div class="col-12 dugme">
+																	<a
+																		th:href="@{/offers/laptop/laptopDetail?id=}+${laptop.id}"
+																		class="btn btn-primary">Ponuda</a>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div th:replace="common/header :: footer" />
+	<div th:replace="common/header :: body-bottom-scripts" />
+	<script type="text/javascript">
+		var items = document.getElementsByClassName("nav-link");
+		items[1].classList.add("aktivna");
+	 </script>
+
+	<script>
+		$(document).ready(function() {
+			$('#laptopList').DataTable({
+				"lengthMenu":[ [5,10,15,20,-1] , [5,10,15,20,"All"] ],
+				"ordering":false,
+				stateSave:true
+			});
+			
+			$("#laptopList").on('page.dt', function() {
+				$('html, body').animate({
+					scrollTop: $('#laptopList').offset().top
+				}, 200);
+			});
+		});
+	</script>
+
+	<!-- jQuery -->
+
+
+
+
+	<!-- Include all compiled plugins -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+		integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+		crossorigin="anonymous"></script>
+	<script src="/js/dodatak.js"></script>
+	<!-- <script src="/js/jquery.dataTables.min.js"></script>
+	<script src="/js/dataTables.bootstrap.min.js"></script> -->
+	<script type="text/javascript"
+		src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
+
+</body>
+</html>

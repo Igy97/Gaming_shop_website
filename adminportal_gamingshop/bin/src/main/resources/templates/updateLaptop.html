@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container">
+		<div class="row">
+			<form class="form-horizontal" th:action="@{/laptop/updatelaptop}" method="post"
+				enctype="multipart/form-data">
+				<fieldset>
+					<legend class="center-block">
+						Editovanje laptopa<span style="font-size: small"> *je obavezno polje</span>
+					</legend>
+
+
+					<input hidden="hidden" name="id" th:value="${laptop.id}" />
+
+					<!-- title -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="title">* Ime</label>
+
+						<div class="col-md-8">
+							<input type="text" name="title" class="form-control" id="title"
+								th:value="${laptop.title}" required="required" placeholder="Ime" />
+							<span class="help-block">Ime proizvoda</span>
+						</div>
+					</div>
+
+					<!-- author -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="manufacturer">*
+							Proizvodjac</label>
+						<div class="col-md-8">
+							<input type="text" name="manufacturer" class="form-control" id="manufacturer"
+								th:value="${laptop.manufacturer}" required="required"
+								placeholder="Proizvodjac" /> <span class="help-block">Ime kompanije koja je proizvela ovaj proizvod</span>
+						</div>
+					</div>
+
+					<!-- publisher -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="display">*Ekran</label>
+						<div class="col-md-8">
+							<input type="text" name="display" class="form-control" required="required"
+								id="display" th:value="${laptop.display}"
+								placeholder="Velicna ekrana" /> <span class="help-block">Velicina ekrana</span>
+						</div>
+					</div>
+					
+					<!-- publisher -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="resolution">*Rezolucija</label>
+						<div class="col-md-8">
+							<input type="text" name="resolution" class="form-control" required="required"
+								id="resolution" th:value="${laptop.resolution}"
+								placeholder="Rezolucija" /> <span class="help-block">Velicina rezolucije</span>
+						</div>
+					</div>
+					
+					<!-- publisher -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="ram">*Ram</label>
+						<div class="col-md-8">
+							<input type="text" name="ram" class="form-control" required="required"
+								id="ram" th:value="${laptop.Ram}"
+								placeholder="Ram" /> <span class="help-block">Kolicina ram memorije</span>
+						</div>
+					</div>
+					
+					<!-- publisher -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="battery">*Baterija</label>
+						<div class="col-md-8">
+							<input type="text" name="battery" class="form-control" required="required"
+								id="battery" th:value="${laptop.battery}"
+								placeholder="Baterija" /> <span class="help-block">Koliko celija ima baterija</span>
+						</div>
+					</div>
+					
+					<!-- publisher -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="type_hdd">*Vrsta sekundarne memorije</label>
+						<div class="col-md-8">
+							<input type="text" name="type_hdd" class="form-control" required="required"
+								id="type_hdd" th:value="${laptop.type_hdd}"
+								placeholder="" />
+						</div>
+					</div>
+					
+					<!-- publisher -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="hdd">*Kolicina sekundarne memorije</label>
+						<div class="col-md-8">
+							<input type="text" name="hdd" class="form-control" required="required"
+								id="hdd" th:value="${laptop.hdd}"
+								placeholder="" />
+						</div>
+					</div>
+					
+					<!-- publisher -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="processor">*Procesor</label>
+						<div class="col-md-8">
+							<input type="text" name="processor" class="form-control" required="required"
+								id="hdd" th:value="${laptop.processor}"
+								placeholder="Ime procesora" />
+						</div>
+					</div>
+					
+					<!-- publisher -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="graphics_card">*Graficka karta</label>
+						<div class="col-md-8">
+							<input type="text" name="graphics_card" class="form-control" required="required"
+								id="graphics_card" th:value="${laptop.graphics_card}"
+								placeholder="Ime graficke karte" />
+						</div>
+					</div>
+					
+					<!-- publisher -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="warranty">*Garancija</label>
+						<div class="col-md-8">
+							<input type="text" name="warranty" class="form-control" required="required"
+								id="warranty" th:value="${laptop.warranty}"
+								placeholder="Koliko godina garancije za proizvod" />
+						</div>
+					</div>
+
+
+					<!-- list price -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="listPrice">Trzisna cena</label>
+						<div class="col-md-8">
+							<div class="input-group">
+								<span class="input-group-addon">RSD</span> <input
+									th:value="${laptop.listPrice}" type="number" name="listPrice" step="0.01"
+									class="form-control" id="listPrice" placeholder="List Price" />
+							</div>
+							<span class="help-block">Cena proizvoda-trzisna</span>
+						</div>
+					</div>
+
+					<!-- our price -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="ourPrice">Nasa cena</label>
+						<div class="col-md-8">
+							<div class="input-group">
+								<span class="input-group-addon">RSD</span> <input
+									th:value="${laptop.ourPrice}" type="number" name="ourPrice" step="0.01"
+									class="form-control" id="ourPrice" placeholder="Our Price" />
+							</div>
+							<span class="help-block">Nasa cena proizvoda</span>
+						</div>
+					</div>
+
+					<!-- in stock number -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="inStockNumber">Kolicna proizvoda</label>
+						<div class="col-md-8">
+							<input th:value="${laptop.inStockNumber}" type="number"
+								name="inStockNumber" class="form-control" id="inStockNumber"
+								placeholder="" /> <span
+								class="help-block">Kolicina proizvoda dostupna u magacinu</span>
+						</div>
+					</div>
+
+					<!-- status of book -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="status">Status</label>
+						<div class="col-md-8">
+							<label><input value="true" type="radio" name="active"
+								checked="checked" /> Active </label> <label><input
+								value="false" type="radio" name="active" />
+								Inactive </label> <span class="help-block">Da li je ovaj prozvod dostupan</span>
+						</div>
+					</div>
+
+					<!-- description -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="description">Opis</label>
+						<div class="col-md-8">
+							<textarea name="description" rows="5" class="form-control"
+								id="description" th:value="${laptop.description}"
+								placeholder="Description" ></textarea>
+							<span class="help-block">Opis proizvoda</span>
+						</div>
+					</div>
+
+					<!-- upload image -->
+					<div class="form-group">
+						<div class="col-md-2">
+							<label for="laptopImage">Uploaduj sliku</label>
+						</div>
+						<div class="col-md-8">
+							<input id="laptopImage" type="file" name="laptopImage"
+								th:value="${laptop.laptopImage}" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-2"></div>
+						<div class="col-md-8">
+							<button type="submit" class="btn btn-success">Dodaj</button>
+							<a class="btn btn-danger" th:href="@{/}">Cancel</a>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+	
+	<div class="container">
+		<div>
+			<ol class="breadcrumb">
+				<li><a th:href="@{/graphics_card/graphics_cardList}"><i class="fa fa-long-arrow-left" aria-hidden="true"></i>Vrati se</a></li>
+				<li><a th:href="@{/graphics_card/updategraphics_card?id=}+${graphics_card.id}">Edit</a></li>
+			</ol>
+			
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-3">
+				<div class="panel panel-default">
+				<div class="panel-body">
+					<img th:src="'https://springtestbyigy97.azurewebsites.net/images/graphics_card/'+${graphics_card.id}+'.jpg'" class="img-responsive center-block" />
+				</div>
+				</div>
+			</div>
+			<div class="col-xs-9">
+				<h3 th:text="${graphics_card.title}"></h3>
+				<div class="row">
+					<div class="col-xs-6">
+						<p><strong>Proizvodjac: </strong><span th:text="${graphics_card.manufacturer}"></span></p>
+						<p><strong>Interfejs: </strong><span th:text="${graphics_card.graphics_interface}"></span></p>
+						<p><strong>Brzina memorije: </strong><span th:text="${graphics_card.clock_memory}"></span></p>
+						<p><strong>Brzina procesora: </strong><span th:text="${graphics_card.clock_processor}"></span></p>
+						<p><strong>Vrsta memorije: </strong><span th:text="${graphics_card.type_of_memory}"></span></p>
+						<p><strong>Kapacitet memorije: </strong><span th:text="${graphics_card.capacity_of_memory}"></span></p>
+					</div>
+					<div class="col-xs-6">
+						<p><strong>Broj hdmi-a: </strong><span th:text="${graphics_card.number_of_hdmi}"></span></p>
+						<p><strong>Broj vga: </strong><span th:text="${graphics_card.number_of_vga}"></span></p>
+						<p><strong>Broj display portova: </strong><span th:text="${graphics_card.number_of_display_port}"></span></p>
+						<p><strong>Trzisna cena: </strong><span th:text="${graphics_card.listPrice}"></span></p>
+						<p><strong>Nasa cena: </strong><span th:text="${graphics_card.ourPrice}"></span></p>
+						<p><strong>Broj proizvoda na lageru: </strong><span th:text="${graphics_card.inStockNumber}"></span></p>
+					</div>
+				</div>
+				
+				<p><Strong>Opis: </Strong><span th:utext="${graphics_card.description}"></span></p>
+			</div>
+			
+		</div>
+	</div>
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

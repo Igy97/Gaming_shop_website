@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+</head>
+<body>
+	<div th:fragment="navbar">
+		<header class="container-fluid p-0">
+			<nav class="navbar navbar-expand-md fixed-top ">
+				<a class="navbar-brand" href="#"><span class="text-primary">Gaming</span>Shop</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<i class="fas fa-align-justify nesto"></i>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item active"><a class="nav-link" href="/">Početna</a>
+						</li>
+						<li class="nav-item nesto2"><a class="nav-link"
+							th:href="@{/offers}">Ponuda</a></li>
+						<li class="nav-item"><a class="nav-link" href="/gallery">Galerija</a>
+						</li>
+						<li class="nav-item"><a class="nav-link" href="/aboutus">O
+								nama</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="/shoppingCart/cart">Korpa</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="strane/kupovina.html" sec:authorize="isAnonymous()"
+							th:href="@{/login}">Moj nalog</a>
+						<li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"> Moj nalog </a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" th:href="@{/myProfile}">Podesavanja</a>
+								<a class="dropdown-item" th:href="@{/logout}">Izloguj se</a>
+							</div>
+						</li>
+
+
+
+					</ul>
+				</div>
+			</nav>
+		</header>
+	</div>
+
+	<div th:fragment="footer fixed-bottom">
+		<footer class="container-fluid p-0">
+			<div class="bg-primary text-center py-3 ">
+				<div class="row  m-0">
+					<div class="col-2">
+						<a href="#"><i class="fab fa-facebook-f fa-2x linkovi"></i></a>
+					</div>
+
+					<div class="col-2">
+						<a href=""><i class="fab fa-instagram fa-2x linkovi"></i></a>
+					</div>
+
+					<div class="col-2">
+						<a href="#"><i class="fab fa-twitter fa-2x linkovi"></i></a>
+					</div>
+
+					<div class="col-2">
+						<a href="#"><i class="fab fa-google-plus-g fa-2x linkovi"></i></a>
+					</div>
+
+					<div class="col-2">
+						<a href="#"><i class="fab fa-linkedin-in fa-2x linkovi"></i></a>
+					</div>
+
+					<div class="col-2">
+						<a href="#"><i class="fab fa-pinterest-p fa-2x linkovi"></i></a>
+					</div>
+				</div>
+			</div>
+			<div class="text-center text-white p-2"
+				style="background-color: black;">
+				<h3>
+					© 2019 Copyright:<span class="font-weight-bold text-primary">Igy97</span>
+				</h3>
+			</div>
+		</footer>
+	</div>
+
+	<div th:fragment="body-bottom-scripts">
+		<!-- jQuery -->
+		<script src="/js/jquery.js">
+			</script>
+		<!-- Include all compiled plugins -->
+		<script src="/js/bootstrap.min.js">
+			</script>
+	</div>
+</body>
+</html>
+
+
+
+
+

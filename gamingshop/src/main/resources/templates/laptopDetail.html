@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="sr" xmlns:th="http://www.w3.org/1999/xhtml"
+	xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+<title>GamingShop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- Bootstrap -->
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/header.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/moj.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/fontawesome-all.css}" />
+</head>
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container-fluid" style="min-height: 700px;">
+		<div class="" style="">
+			<form th:action="@{/shoppingCart/addItem/laptop}" method="post">
+				<input hidden="hidden" th:field="*{laptop.id}" />
+				<div class="row" style="margin-top: 8%;">
+					<div class="col-4">
+						<a th:href="@{/offers/laptop}"
+							style="font-weight: bold; font-size: large; display: block;">Vrati
+							se nazad u ponude</a> <img class="img-responsive shelf-laptop"
+							th:src="'https://springtestbyigy97.azurewebsites.net'+'/images/laptop/'+${laptop.id}+'.jpg'"
+							style="width: 100%;" />
+
+					</div>
+
+					<div class="col-8">
+						<h3>
+							<span th:if="${addlaptopSuccess}" style="color: forestgreen"><i
+								class="fa fa-check" aria-hidden="true"
+								style="color: forestgreen"></i>Dodato u korpu.</span>
+						</h3>
+						<h3>
+							<span th:if="${notEnoughStock}" style="color: red">Ukupno
+								je ostalo: <span th:text="${laptop.inStockNumber}"></span> na
+								lageru.
+							</span>
+						</h3>
+						<h3 th:text="${laptop.title}" style="margin-bottom: 2%;"></h3>
+						<div class="row">
+							<div class="col-6">
+								<h5>
+									<strong>Proizvodjac: </strong><span
+										th:text="${laptop.manufacturer}"></span>
+								</h5>
+								<p>
+									<strong>Velicina ekrana: </strong><span
+										th:text="${laptop.display}"></span>
+								</p>
+								<p>
+									<strong>Rezolucija: </strong><span
+										th:text="${laptop.resolution}"></span>
+								</p>
+								<p>
+									<strong>Ram: </strong><span th:text="${laptop.Ram}"></span>
+								</p>
+								<p>
+									<strong>Baterija: </strong><span th:text="${laptop.battery}"></span>
+								</p>
+								<p>
+									<strong>Vrsta sekundarne memorije: </strong><span
+										th:text="${laptop.battery}"></span>
+								</p>
+								<p>
+									<strong>Procesor: </strong><span th:text="${laptop.processor}"></span>
+								</p>
+								<p>
+									<strong>Graficka karta: </strong><span
+										th:text="${laptop.graphics_card}"></span>
+								</p>
+								<p>
+									<strong>Kolicina sekundarne memorije: </strong><span
+										th:text="${laptop.hdd}"></span>
+								</p>
+								<p>
+									<strong>Garancija: </strong><span th:text="${laptop.warranty}"></span>
+								</p>
+							</div>
+
+							<div class="col-6">
+								<div class="panel panel-default"
+									style="border-width: 5px; margin-top: 20px;">
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-12">
+												<h4>
+													Nasa cena: <span style="color: #db3208;"><span
+														th:text="${laptop.ourPrice} + 'RSD'"></span></span>
+												</h4>
+												<p>
+													Trzisna cena: <span style="text-decoration: line-through"><span
+														th:text="${laptop.listPrice} + 'RSD'"></span></span>
+												</p>
+												<p>
+													Ukupno ste ustedeli: <span
+														th:text="${#numbers.formatDecimal((laptop.listPrice - laptop.ourPrice), 0, 'COMMA', 2, 'POINT' ) + 'RSD'}"></span>
+												</p>
+												<span>Kolicina: </span> <select name="qty">
+													<option th:each="qty : ${qtyList}" th:value="${qty}"
+														th:text="${qty}"></option>
+												</select>
+											</div>
+											<div class="col-12 mt-3">
+												<h4 th:if="*{laptop.inStockNumber&gt;10}"
+													style="color: green">Na lageru</h4>
+												<h4
+													th:if="*{laptop.inStockNumber&lt;10 and laptop.inStockNumber&gt;0}"
+													style="color: green">
+													Ostalo je jos: <span th:text="${laptop.inStockNumber}">
+													</span>
+												</h4>
+												<h4 th:if="*{laptop.inStockNumber==0}"
+													style="color: darkred;">Nije na lageru</h4>
+												<button type="submit" class="btn btn-primary"
+													style="padding: 10px 40px 10px 40px; width: 90%;">Dodaj
+													u korpu</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<hr />
+						<p th:utext="${laptop.description}"></p>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- end of container -->
+	<div th:replace="common/header :: footer" />
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

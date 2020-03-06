@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="sr" xmlns:th="http://www.w3.org/1999/xhtml"
+	xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+<title>GamingShop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- Bootstrap -->
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/header.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/moj.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/fontawesome-all.css}" />
+</head>
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container-fluid" style="margin-top: 8%; min-height: 700px;">
+
+		<div class="row" style="margin-top: 10px;">
+
+			<div class="col-12">
+				<div class="bg-dark"
+					style="width: 100%; padding-top: 1%; padding-bottom: 1%; margin-left: 0%; margin-bottom: 2%;">
+					<h2 class="section-headline">
+						<h2 class="section-headline text-center"
+							style="color: white; font-size: 1.9vw;">Lista vasih
+							izabranih proizvoda:</h2>
+					</h2>
+				</div>
+			</div>
+
+
+			<div class="col-12">
+				<div class="row">
+					<div class="col-6 text-left">
+						<a class="btn btn-primary" th:href="@{/offers/}">Nastavi
+							kupovinu</a>
+					</div>
+					<div class="col-6 text-right">
+						<a class="btn btn-primary"
+							th:href="@{/checkout(id=${shoppingCart.id})}">Pravljenje
+							racuna</a>
+					</div>
+					<br />
+					<div th:if="${notEnoughStock}" class="alert alert-warning">
+						Nema dovoljno proizvoda.</div>
+					<div th:if="${emptyCart}" class="alert alert-warning">Vasa
+						korpa je prazna.</div>
+
+					<br /> <br />
+					<div class="row" style="width: 100%;">
+						<div class="col-8">
+							<h4 style="margin-left: 70px;">Proizvodi</h4>
+						</div>
+						<div class="col-2">
+							<h4>Cena</h4>
+						</div>
+						<div class="col-2">
+							<h4>Kolicina</h4>
+						</div>
+					</div>
+				</div>
+
+				<!--**************** display products in cart ****************-->
+
+				<div class="row" th:each="cartItem : ${cartItemList}">
+					<form th:action="@{/shoppingCart/updateCartItem}"
+						style="width: 98%;" method="post">
+						<hr />
+
+						<div th:if="${cartItem.laptop}" class="row">
+							<div class="col-2">
+								<a
+									href="'/offers/laptop/laptopDetail?id=' + ${cartItem.laptop.id}">
+									<img style="width: 80%; margin-left: 20px;"
+									class="img-responsive shelf-book center-block"
+									th:src="'https://springtestbyigy97.azurewebsites.net'+'/images/laptop/'+${cartItem.laptop.id}+'.jpg'" />
+								</a>
+							</div>
+
+							<div class="col-6">
+								<div style="margin-left: 50px;">
+									<a th:href="@{/bookDetail?id=}+${cartItem.laptop.id}"><h4
+											th:text="${cartItem.laptop.title}"></h4></a>
+									<p th:if="${cartItem.laptop.inStockNumber&gt;10}"
+										style="color: green;">Na lageru</p>
+									<p
+										th:if="${cartItem.laptop.inStockNumber&lt;10 and cartItem.laptop.inStockNumber&gt;0}"
+										style="color: green;">
+										Ukupno : <span th:text="${cartItem.laptop.inStockNumber}"></span>
+										na lageru
+									</p>
+									<p th:if="${cartItem.laptop.inStockNumber==0}"
+										style="color: darkred;">Prozivod vise nije dostupan</p>
+									<a th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}">obrisi</a>
+								</div>
+							</div>
+
+							<div class="col-2" style="padding: 0;">
+								<h5 style="color: #db3208; font-size: large; margin-left: 10px;">
+									<span th:text="${cartItem.laptop.ourPrice} + 'RSD'"
+										th:style="${cartItem.laptop.inStockNumber}==0? 'text-decoration: line-through' : ''"></span>
+								</h5>
+							</div>
+
+							<div class="col-2" style="padding: 0;">
+								<input hidden="hidden" name="id" th:value="${cartItem.id}" /> <input
+									th:id="${cartItem.id}" th:name="qty"
+									th:disabled="${cartItem.laptop.inStockNumber==0}"
+									class="form-control cartItemQty" th:value="${cartItem.qty}"
+									style="width: 93%;" />
+								<button style="display: none;"
+									th:id="'update-item-'+${cartItem.id}" type="submit"
+									class="btn btn-warning btn-xs">Update</button>
+							</div>
+						</div>
+
+
+						<div th:if="${cartItem.processor}" class="row">
+							<div class="col-2">
+								<a
+									href="'/offers/processor/processorDetail?id=' + ${cartItem.processor.id}">
+									<img style="width: 80%; margin-left: 20px;"
+									class="img-responsive shelf-book center-block"
+									th:src="'https://springtestbyigy97.azurewebsites.net'+'/images/processor/'+${cartItem.processor.id}+'.jpg'" />
+								</a>
+							</div>
+
+							<div class="col-6">
+								<div style="margin-left: 50px;">
+									<a th:href="@{/bookDetail?id=}+${cartItem.processor.id}"><h4
+											th:text="${cartItem.processor.title}"></h4></a>
+									<p th:if="${cartItem.processor.inStockNumber&gt;10}"
+										style="color: green;">Na lageru</p>
+									<p
+										th:if="${cartItem.processor.inStockNumber&lt;10 and cartItem.processor.inStockNumber&gt;0}"
+										style="color: green;">
+										Ukupno: <span th:text="${cartItem.processor.inStockNumber}"></span>
+										na lageru
+									</p>
+									<p th:if="${cartItem.processor.inStockNumber==0}"
+										style="color: darkred;">Proizvod vise nije dostupan</p>
+									<a th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}">obrisi</a>
+								</div>
+							</div>
+
+							<div class="col-2" style="padding: 0;">
+								<h5 style="color: #db3208; font-size: large; margin-left: 10px;">
+									<span th:text="${cartItem.processor.ourPrice} + 'RSD'"
+										th:style="${cartItem.processor.inStockNumber}==0? 'text-decoration: line-through' : ''"></span>
+								</h5>
+							</div>
+
+							<div class="col-2" style="padding: 0;">
+								<input hidden="hidden" name="id" th:value="${cartItem.id}" /> <input
+									th:id="${cartItem.id}" th:name="qty"
+									th:disabled="${cartItem.processor.inStockNumber==0}"
+									class="form-control cartItemQty" th:value="${cartItem.qty}"
+									style="width: 93%;" />
+								<button style="display: none;"
+									th:id="'update-item-'+${cartItem.id}" type="submit"
+									class="btn btn-warning btn-xs">Update</button>
+							</div>
+						</div>
+
+
+
+						<div th:if="${cartItem.graphics_Card}" class="row">
+							<div class="col-2">
+								<a
+									href="'/offers/graphhics_card/graphics_cardDetail?id=' + ${cartItem.graphics_Card.id}">
+									<img style="width: 80%; margin-left: 20px;"
+									class="img-responsive shelf-book center-block"
+									th:src="'https://springtestbyigy97.azurewebsites.net'+'/images/graphics_card/'+${cartItem.graphics_Card.id}+'.jpg'" />
+								</a>
+							</div>
+
+							<div class="col-6">
+								<div style="margin-left: 50px;">
+									<a
+										href="'/offers/graphhics_card/graphics_cardDetail?id=' + ${cartItem.graphics_Card.id}"><h4
+											th:text="${cartItem.graphics_Card.title}"></h4></a>
+									<p th:if="${cartItem.graphics_Card.inStockNumber&gt;10}"
+										style="color: green;">Na lageru</p>
+									<p
+										th:if="${cartItem.graphics_Card.inStockNumber&lt;10 and cartItem.graphics_Card.inStockNumber&gt;0}"
+										style="color: green;">
+										Ukupno: <span
+											th:text="${cartItem.graphics_Card.inStockNumber}"></span> na
+										lageru
+									</p>
+									<p th:if="${cartItem.graphics_Card.inStockNumber==0}"
+										style="color: darkred;">Proizvod vise nije dostupan</p>
+									<a th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}">obrisi</a>
+								</div>
+							</div>
+
+							<div class="col-2" style="padding: 0;">
+								<h5 style="color: #db3208; font-size: large; margin-left: 10px;">
+									<span th:text="${cartItem.graphics_Card.ourPrice} + 'RSD'"
+										th:style="${cartItem.graphics_Card.inStockNumber}==0? 'text-decoration: line-through' : ''"></span>
+								</h5>
+							</div>
+
+							<div class="col-2" style="padding: 0;">
+								<input hidden="hidden" name="id" th:value="${cartItem.id}" /> <input
+									th:id="${cartItem.id}" th:name="qty"
+									th:disabled="${cartItem.graphics_Card.inStockNumber==0}"
+									class="form-control cartItemQty" th:value="${cartItem.qty}"
+									style="width: 93%;" />
+								<button style="display: none;"
+									th:id="'update-item-'+${cartItem.id}" type="submit"
+									class="btn btn-warning btn-xs">Update</button>
+							</div>
+						</div>
+
+
+						<div th:if="${cartItem.motherboard}" class="row">
+							<div class="col-2">
+								<a
+									href="'/offers/motherboard/motherboardDetail?id=' + ${cartItem.motherboard.id}">
+									<img style="width: 80%; margin-left: 20px;"
+									class="img-responsive shelf-book center-block"
+									th:src="'https://springtestbyigy97.azurewebsites.net'+'/images/motherboard/'+${cartItem.motherboard.id}+'.jpg'" />
+								</a>
+							</div>
+
+							<div class="col-6">
+								<div style="margin-left: 50px;">
+									<a
+										href="'/offers/motherboard/motherboardDetail?id=' + ${cartItem.motherboard.id}"><h4
+											th:text="${cartItem.motherboard.title}"></h4></a>
+									<p th:if="${cartItem.motherboard.inStockNumber&gt;10}"
+										style="color: green;">Na lageru</p>
+									<p
+										th:if="${cartItem.motherboard.inStockNumber&lt;10 and cartItem.motherboard.inStockNumber&gt;0}"
+										style="color: green;">
+										Ukupno: <span th:text="${cartItem.motherboard.inStockNumber}"></span>
+										na lageru
+									</p>
+									<p th:if="${cartItem.motherboard.inStockNumber==0}"
+										style="color: darkred;">Proizvod vise nije dostupan</p>
+									<a th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}">obrisi</a>
+								</div>
+							</div>
+
+							<div class="col-2" style="padding: 0;">
+								<h5 style="color: #db3208; font-size: large; margin-left: 10px;">
+									<span th:text="${cartItem.motherboard.ourPrice} + 'RSD'"
+										th:style="${cartItem.motherboard.inStockNumber}==0? 'text-decoration: line-through' : ''"></span>
+								</h5>
+							</div>
+
+							<div class="col-2" style="padding: 0;">
+								<input hidden="hidden" name="id" th:value="${cartItem.id}" /> <input
+									th:id="${cartItem.id}" th:name="qty"
+									th:disabled="${cartItem.motherboard.inStockNumber==0}"
+									class="form-control cartItemQty" th:value="${cartItem.qty}"
+									style="width: 93%;" />
+								<button style="display: none;"
+									th:id="'update-item-'+${cartItem.id}" type="submit"
+									class="btn btn-warning btn-xs">Update</button>
+							</div>
+						</div>
+
+
+						<div th:if="${cartItem.pc_Case}" class="row">
+							<div class="col-2">
+								<a
+									href="'/offers/pc_case/pc_caseDetail?id=' + ${cartItem.pc_Case.id}">
+									<img style="width: 80%; margin-left: 20px;"
+									class="img-responsive shelf-book center-block"
+									th:src="'https://springtestbyigy97.azurewebsites.net'+'/images/pc_case/'+${cartItem.pc_Case.id}+'.jpg'" />
+								</a>
+							</div>
+
+							<div class="col-6">
+								<div style="margin-left: 50px;">
+									<a
+										href="'/offers/pc_case/pc_caseDetail?id=' + ${cartItem.pc_Case.id}"><h4
+											th:text="${cartItem.pc_Case.title}"></h4></a>
+									<p th:if="${cartItem.pc_Case.inStockNumber&gt;10}"
+										style="color: green;">Na lageru</p>
+									<p
+										th:if="${cartItem.pc_Case.inStockNumber&lt;10 and cartItem.pc_Case.inStockNumber&gt;0}"
+										style="color: green;">
+										Ukupno: <span th:text="${cartItem.pc_Case.inStockNumber}"></span>
+										na lageru
+									</p>
+									<p th:if="${cartItem.pc_Case.inStockNumber==0}"
+										style="color: darkred;">Proizvod vise nije dostupan</p>
+									<a th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}">obrisi</a>
+								</div>
+							</div>
+
+							<div class="col-2" style="padding: 0;">
+								<h5 style="color: #db3208; font-size: large; margin-left: 10px;">
+									<span th:text="${cartItem.pc_Case.ourPrice} + 'RSD'"
+										th:style="${cartItem.pc_Case.inStockNumber}==0? 'text-decoration: line-through' : ''"></span>
+								</h5>
+							</div>
+
+							<div class="col-2" style="padding: 0;">
+								<input hidden="hidden" name="id" th:value="${cartItem.id}" /> <input
+									th:id="${cartItem.id}" th:name="qty"
+									th:disabled="${cartItem.pc_Case.inStockNumber==0}"
+									class="form-control cartItemQty" th:value="${cartItem.qty}"
+									style="width: 93%;" />
+								<button style="display: none;"
+									th:id="'update-item-'+${cartItem.id}" type="submit"
+									class="btn btn-warning btn-xs">Update</button>
+							</div>
+						</div>
+
+						<div th:if="${cartItem.game}" class="row">
+							<div class="col-2">
+								<a href="'/offers/game/gameDetail?id=' + ${cartItem.game.id}">
+									<img style="width: 80%; margin-left: 20px;"
+									class="img-responsive shelf-book center-block"
+									th:src="'https://springtestbyigy97.azurewebsites.net'+'/images/game/'+${cartItem.game.id}+'.jpg'" />
+								</a>
+							</div>
+
+							<div class="col-6">
+								<div style="margin-left: 50px;">
+									<a href="'/offers/game/gameDetail?id=' + ${cartItem.game.id}"><h4
+											th:text="${cartItem.game.title}"></h4></a>
+									<p th:if="${cartItem.game.inStockNumber&gt;10}"
+										style="color: green;">Na lageru</p>
+									<p
+										th:if="${cartItem.game.inStockNumber&lt;10 and cartItem.game.inStockNumber&gt;0}"
+										style="color: green;">
+										Ukupno: <span th:text="${cartItem.game.inStockNumber}"></span>
+										na lageru
+									</p>
+									<p th:if="${cartItem.game.inStockNumber==0}"
+										style="color: darkred;">Proizvod vise nije dostupan</p>
+									<a th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}">obrisi</a>
+								</div>
+							</div>
+
+							<div class="col-2" style="padding: 0;">
+								<h5 style="color: #db3208; font-size: large; margin-left: 10px;">
+									<span th:text="${cartItem.game.ourPrice} + 'RSD'"
+										th:style="${cartItem.game.inStockNumber}==0? 'text-decoration: line-through' : ''"></span>
+								</h5>
+							</div>
+
+							<div class="col-2" style="padding: 0;">
+								<input hidden="hidden" name="id" th:value="${cartItem.id}" /> <input
+									th:id="${cartItem.id}" th:name="qty"
+									th:disabled="${cartItem.game.inStockNumber==0}"
+									class="form-control cartItemQty" th:value="${cartItem.qty}"
+									style="width: 93%;" />
+								<button style="display: none;"
+									th:id="'update-item-'+${cartItem.id}" type="submit"
+									class="btn btn-warning btn-xs">Update</button>
+							</div>
+						</div>
+
+
+
+
+					</form>
+				</div>
+
+				<div class="row">
+					<hr />
+					<h4 class="col-12 text-right">
+						<strong style="font-size: large;">Ukupna cena(<span
+							th:text="${'kolicina:' + #lists.size(cartItemList)}"></span>):
+						</strong> <span style="color: #db3208; font-szie: large;"><span
+							th:text="${shoppingCart.grandTotal} + 'RSD'"></span></span>
+					</h4>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<!-- end of container -->
+	<div th:replace="common/header :: footer" />
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+	<script type="text/javascript">
+			var items = document.getElementsByClassName("nav-link");
+			items[4].classList.add("aktivna");
+		  </script>
+</body>
+</html>

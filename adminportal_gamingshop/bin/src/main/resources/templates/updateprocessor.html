@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container">
+		<div class="row">
+			<form class="form-horizontal" th:action="@{/processor/add}" method="post"
+				enctype="multipart/form-data">
+				<fieldset>
+					<legend class="center-block">
+						Unos novog processora<span style="font-size: small"> *je obavezno polje</span>
+					</legend>
+
+					<input hidden="hidden" name="id" th:value="${processor.id}" />
+
+					<!-- title -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="title">* Ime</label>
+
+						<div class="col-md-8">
+							<input type="text" name="title" class="form-control" id="title"
+								th:value="${processor.title}" required="required" placeholder="Ime" />
+							<span class="help-block">Ime proizvoda</span>
+						</div>
+					</div>
+
+					<!-- author -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="manufacturer">*
+							Proizvodjac</label>
+						<div class="col-md-8">
+							<input type="text" name="manufacturer" class="form-control" id="manufacturer"
+								th:value="${processor.manufacturer}" required="required"
+								placeholder="Proizvodjac" /> <span class="help-block">Ime kompanije koja je proizvela ovaj proizvod</span>
+						</div>
+					</div>
+
+					<!-- publisher -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="socket">*Socket</label>
+						<div class="col-md-8">
+							<input type="text" name="socket" class="form-control" required="required"
+								id="socket" th:value="${processor.socket}"
+								placeholder="Socket" /> <span class="help-block">Socket za procesor</span>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="inStockNumber">Broj jezgara:</label>
+						<div class="col-md-8">
+							<input th:value="${processor.number_of_core}" type="number"
+								name="number_of_core" class="form-control" id="number_of_core"> </input>
+						</div>
+					</div>
+					
+					
+					
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="clock_speed">*Brzina jezgara</label>
+						<div class="col-md-8">
+							<input type="text" name="clock_speed" class="form-control" required="required"
+								id="clock_speed" th:value="${processor.clock_speed}"
+								/> 
+						</div>
+					</div>
+					
+					<!-- publisher -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="max_consumption">*Maksimalna potrosnja</label>
+						<div class="col-md-8">
+							<input type="text" name="max_consumption" class="form-control" required="required"
+								id="max_consumption" th:value="${processor.max_consumption}"
+								 /> 
+						</div>
+					</div>
+					
+					
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="mark">*Oznaka</label>
+						<div class="col-md-8">
+							<input type="text" name="mark" class="form-control" required="required"
+								id="mark" th:value="${processor.mark}"
+								 /> 
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="production_technology">*Tehnologija izrade</label>
+						<div class="col-md-8">
+							<input type="text" name="production_technology" class="form-control" required="required"
+								id="production_technology" th:value="${processor.production_technology}"
+								 /> 
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="integrated_graphics">*Graficka</label>
+						<div class="col-md-8">
+							<input type="text" name="integrated_graphics" class="form-control" required="required"
+								id="integrated_graphics" th:value="${processor.integrated_graphics}"
+								 /> 
+						</div>
+					</div>
+					
+					
+					
+					<!-- publisher -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="warranty">*Garancija</label>
+						<div class="col-md-8">
+							<input type="text" name="warranty" class="form-control" required="required"
+								id="warranty" th:value="${processor.warranty}"
+								placeholder="Koliko godina garancije za proizvod"></input>
+						</div>
+					</div>
+
+
+					<!-- list price -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="listPrice">Trzisna cena</label>
+						<div class="col-md-8">
+							<div class="input-group">
+								<span class="input-group-addon">RSD</span> <input
+									th:value="${processor.listPrice}" type="number" name="listPrice" step="0.01"
+									class="form-control" id="listPrice" placeholder="List Price" />
+							</div>
+							<span class="help-block">Cena proizvoda-trzisna</span>
+						</div>
+					</div>
+
+					<!-- our price -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="ourPrice">Nasa cena</label>
+						<div class="col-md-8">
+							<div class="input-group">
+								<span class="input-group-addon">RSD</span> <input
+									th:value="${processor.ourPrice}" type="number" name="ourPrice" step="0.01"
+									class="form-control" id="ourPrice" placeholder="Our Price" />
+							</div>
+							<span class="help-block">Nasa cena proizvoda</span>
+						</div>
+					</div>
+
+					<!-- in stock number -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="inStockNumber">Kolicna proizvoda</label>
+						<div class="col-md-8">
+							<input th:value="${processor.inStockNumber}" type="number"
+								name="inStockNumber" class="form-control" id="inStockNumber"
+								placeholder="" /> <span
+								class="help-block">Kolicina proizvoda dostupna u magacinu</span>
+						</div>
+					</div>
+
+					<!-- status of book -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="status">Status</label>
+						<div class="col-md-8">
+							<label><input value="true" type="radio" name="active"
+								checked="checked" /> Active </label> <label><input
+								value="false" type="radio" name="active" />
+								Inactive </label> <span class="help-block">Da li je ovaj prozvod dostupan</span>
+						</div>
+					</div>
+
+					<!-- description -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="description">Opis</label>
+						<div class="col-md-8">
+							<textarea name="description" rows="5" class="form-control"
+								id="description" th:value="${processor.description}"
+								placeholder="Description" ></textarea>
+							<span class="help-block">Opis proizvoda</span>
+						</div>
+					</div>
+
+					<!-- upload image -->
+					<div class="form-group">
+						<div class="col-md-2">
+							<label for="processorImage">Uploaduj sliku</label>
+						</div>
+						<div class="col-md-8">
+							<input id="processorImage" type="file" name="processorImage"
+								th:value="${processor.processorImage}" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-2"></div>
+						<div class="col-md-8">
+							<button type="submit" class="btn btn-success">Dodaj</button>
+							<a class="btn btn-danger" th:href="@{/}">Cancel</a>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

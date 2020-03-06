@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="sr" xmlns:th="http://www.w3.org/1999/xhtml"
+	xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+<title>GamingShop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- Bootstrap -->
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/header.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/moj.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/fontawesome-all.css}" />
+</head>
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container-fluid"
+		style="margin-top: 8%; margin-left: 5%; margin-right: 5%; padding: 0; width: 90%;">
+		<div class="row">
+			<div class="col-6 bg-dark text-white"
+				style="border: 2px solid black; opacity: 0.9;">
+				<div class="row mt-3 ml-3">
+					<div class="row">
+						<h2 style="font-size: 2.2vw;">Nemate nalog? Registrujte se</h2>
+						<p style="width: 100%; font-size: 1.9vw;">Kreiranjem naloga
+							bićete u mogućnosti da:</p>
+						<ul style="padding-bottom: 42%; display: block;">
+							<li style="font-size: 1.3vw;">prolazite brže kroz proces
+								plaćanja,</li>
+							<li style="font-size: 1.3vw;">da koristite više adresa za
+								isporuku,</li>
+							<li style="font-size: 1.3vw;">pregledate i pratite Vaše
+								porudžbine itd.</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-6" style="border: 1px solid black">
+				<div class="row" style="margin-top: 0.1%; width: 100%;">
+					<div class="col-12" style="width: 100%;">
+						<!-- Nav tabs -->
+						<nav>
+							<div class="nav nav-tabs" id="nav-tab" role="tablist">
+								<a class="nav-item nav-link"
+									th:classappend="${classActiveNewAccount}? 'active'"
+									id="nav-home-tab" data-toggle="tab" href="#tab-1" role="tab"
+									aria-controls="nav-home" aria-selected="true"
+									style="font-weight: bolder; . active {color: yellow !important;">Registracija</a>
+								<a class="nav-item nav-link"
+									th:classappend="${classActiveLogin}? 'active'"
+									id="nav-profile-tab" data-toggle="tab" href="#tab-2" role="tab"
+									aria-controls="nav-profile" aria-selected="false"
+									style="font-weight: bolder;">Uloguj se</a> <a
+									class="nav-item nav-link"
+									th:classappend="${classActiveForgetPassword}? 'active'"
+									id="nav-contact-tab" data-toggle="tab" href="#tab-3" role="tab"
+									aria-controls="nav-contact" aria-selected="false"
+									style="font-weight: bolder;">Zaboravljena lozinka</a>
+							</div>
+						</nav>
+
+						<!-- Tab panels -->
+						<div class="tab-content">
+							<!-- create new user pane -->
+							<div class="tab-pane fade" id="tab-1"
+								th:classappend="${classActiveNewAccount}? 'show active'">
+								<div class="panel-group">
+									<div class="panel panel-default" style="border: none;">
+										<div class="panel-body" style="margin-top: 20px;">
+											<div class="alert alert-info" th:if="${emailSent}">Poruka
+												za registraciju je poslata na vasu email adresu.</div>
+											<form th:action="@{/newUser}" method="post">
+												<div class="form-group">
+													<label for="newUsername">* Username: </label>&nbsp;<span
+														style="color: red;" th:if="${usernameExists}">Username
+														vec postoji. Izaberite drugo.</span> <input required="required"
+														type="text" class="form-control" id="newUsername"
+														name="username" />
+													<p style="color: #828282">Unesite ovde username.</p>
+												</div>
+
+												<div class="form-group">
+													<label for="email">* Email Adresa: </label><span
+														style="color: red;" th:if="${emailExists}">Email
+														already exists. Choose a different one.</span> <input
+														required="required" type="text" class="form-control"
+														id="email" name="email" />
+													<p style="color: #828282">Molimo vas koristite vasu
+														validnu email adresu, kako bi u buducnosti dobijali
+														obavestenja za kupovinu.</p>
+												</div>
+
+												<button type="submit" class="btn btn-primary">Registruj
+													se</button>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- log in -->
+							<div class="tab-pane fade" id="tab-2"
+								th:classappend="${classActiveLogin}? 'show active'">
+								<div class="panel-group">
+									<div class="panel panel-default" style="border: none;">
+										<div class="panel-body" style="margin-top: 20px;">
+											<div th:if="${param.error != null}" style="color: red;">Netacna
+												lozinka ili username.</div>
+											<form th:action="@{/login}" method="post">
+												<div class="form-group">
+													<label for="username">* Username: </label> <input
+														required="required" type="text" class="form-control"
+														id="username" name="username" />
+													<p style="color: #828282">Unesite ovde username.</p>
+												</div>
+
+												<div class="form-group">
+													<label for="password">* Lozinka: </label> <input
+														required="required" type="password" class="form-control"
+														id="password" name="password" />
+													<p style="color: #828282">Ovde unesite vasu lozinku</p>
+												</div>
+
+												<button type="submit" class="btn btn-primary">Uloguj
+													se</button>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- forget password -->
+							<div class="tab-pane fade" id="tab-3"
+								th:classappend="${classActiveForgetPassword}? 'show active'">
+								<div class="panel-group">
+									<div class="panel panel-default" style="border: none;">
+										<div class="panel-body" style="margin-top: 20px;">
+											<div th:if="${emailNotExist}" class="alert alert-danger">Email
+												adresa nepostoji.</div>
+											<div th:if="${forgetPasswordEmailSent}"
+												class="alert alert-success">Poruka je poslata na vas-u
+												emaail adresu.</div>
+											<form th:action="@{/forgetPassword}" method="post">
+												<div class="form-group">
+													<label for="recoverEmail">* Vasa email adresa: </label> <input
+														required="required" type="text" class="form-control"
+														id="recoverEmail" name="email" />
+													<p style="color: #828282">Unesite ovde email adresu.</p>
+												</div>
+
+												<button type="submit" class="btn btn-primary">Posalji</button>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="row">
+				<div class="col-12 mt-3">
+					<h2 class="text-left">Kako kupiti</h2>
+					<p class="text-justify">
+						<span class="text-primary font-weight-bold">GamingShop</span>
+						namenjen je pre svega fizičkim, ali i pravnim licima koji žele da
+						na lak, jednostavan i brz način dođu do željenih proizvoda. Proces
+						kupovine je jednostavan, a sa koracima i detaljima na koje treba
+						obratiti pažnju možete se upoznati u nastavku ovog teksta.
+					</p>
+
+					<p>
+						Ukoliko zelite detaljno da pročitate ovaj tekst pritisnite ovo
+						dugme:<a href="#upustvo"
+							class="btn btn-primary ml-md-2 p-md-1 px-md-5" id="prikazi"
+							data-toggle="collapse">Prikaži tekst</a>
+					</p>
+
+				</div>
+			</div>
+
+			<div id="upustvo" class="collapse">
+				<div class="row">
+					<div class="col-md-6 col-sm-12 text-justify">
+						<h4>IZBOR PROIZVODA</h4>
+						<p>Sa leve strane naše stranice nalazi se asortiman sa spiskom
+							svih proizvoda koje možete kupiti u našem šopu. Proizvodi su
+							grupisani u odgovarajuće kategorije, a svaka od glavnih
+							kategorija sadrži određeni broj podkategorija. Klikom na svaku od
+							njih možete imati uvid u njen sadržaj. Na taj način tražite
+							željeni proizvod. Ukoliko ne znate u kojoj kategoriji da tražite
+							određeni proizvod, možete iskoristiti polje za pretragu. Odnosno,
+							klikom na „napredna pretraga" proizvod možete tražiti po nazivu
+							ili delu naziva, proizvođaču i/ili ceni.</p>
+
+						<p>Kada pronađete proizvod koji želite da naručite, kliknite
+							na njegovu sličicu ili naziv pored sličice da uđete na stranu sa
+							detaljnim prikazom. Ukoliko ste već upoznati sa detaljima
+							proizvoda, ovaj korak možete preskočiti i odmah poručiti odabirom
+							dugmeta „U korpu" koji se nalazi neposredno uz željeni proizvod.</p>
+					</div>
+
+					<div class="col-md-6 col-sm-12 text-justify">
+						<h4>SADRŽAJ KORPE</h4>
+						<p>Bilo da ste se upoznavali sa karakteristikama proizvoda ili
+							ste ovaj korak preskočili, odabirom dugmeta „U korpu" proizvod će
+							biti memorisan na Vašem nalogu. Nakon ovoga će Vam se prikazati
+							sadržaj Vaše korpe. Postupak ubacivanja proizvoda u korpu možete
+							ponavljati sve dok ne naručite sve što želite – odabirom dugmeta
+							„Nastavi kupovinu".</p>
+
+						<p>U svakom trenutku možete pogledati sadržaj svoje korpe
+							klikom na istu na vrhu stranice ili u toku samog procesa
+							poručivanja nakon odabira nekog proizvoda. Pregledom sadržaja
+							možete, ne samo videti šta ste to sve poručili, već i vršiti
+							određene izmene.</p>
+
+						<p>Ukoliko želite neku drugu količinu određenog artikla,
+							dovoljno je samo da u polju količina uz taj proizvod ukucate
+							željeni broj i izmenu potvrdite na dugme „izmeni". Količina, a
+							samim tim i iznos će se automatski promeniti.</p>
+
+						<p>Odabirom dugmeta „obriši" pojedinačni artikl možete
+							izbaciti iz svoje korpe. Ukoliko ste se nekim slučajem
+							predomislili u vezi celokupne kupovine (što nas ne bi
+							obradovalo), odabirom „isprazni korpu" odustajete od svih
+							artikala koji se u njoj nalaze.</p>
+
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-12 text-justify">
+						<h4>PORUČIVANJE PROIZVODA IZ KORPE</h4>
+						<p>Nakon odabira svih željenih proizvoda koje ste smestili u
+							svoju korpu iste poručujete klikom na dugme „završi kupovinu". Do
+							ovog trenutka mogli ste biti neulogovani korisnik i slobodno
+							ubacivati ili izbacivati artikle iz svoje korpe. Ali, da bismo
+							znali kome i gde poručene proizvode da pošaljemo, morate nam
+							ostaviti i osnovne podatke o sebi. Na ovom mestu će vam se
+							otvoriti formular (ako se prethodno već niste ulogovali) koji je
+							potrebno da popunite. Ovaj formular popunjavate samo jednom,
+							prilikom prve kupovine, a svaki naredni put dovoljno je samo da
+							se ulogujete na svoj nalog. Dakle, potrebno je da se registrujete
+							(ukoliko niste registrovani korisnik). Odnosno, samo da se
+							prijavite sa svojim korisničkim imenom i lozinkom (ukoliko ste se
+							prethodno već registrovali). Nakon toga biće Vam ponuđeno da
+							potvrdite svoje podatke (klikom na dugme "potvrdi"). U slučaju da
+							se neki od podataka u međuvremenu promenio, možete ga izmeniti na
+							ovom mestu.</p>
+					</div>
+				</div>
+
+
+				<div class="row">
+					<div class="col-12 text-justify">
+						<h4>NAČIN PLAĆANJA</h4>
+						<p>Klikom na „Potvrdi" prikazaće vam se stranica sa opcijom
+							odabira načina plaćanja. Jedino što je još ostalo jeste da
+							obaberete onaj način koji vam najviše odgovara. U mogućnosti ste
+							da odaberete:</p>
+						<ul>
+							<li>gotovinski – ovo znači da robu plaćate gotovinski kuriru
+								prilikom isporuke,</li>
+							<li>uplatnicom – možete je preuzeti <a href="#">ovde</a>.
+							</li>
+							<li>virmanskom uplatom na naš račun – obrazac mozete te
+								preuzeti <a href="#">ovde</a>.
+							</li>
+							<li>putem kredita – za više informacija o ovom vidu plaćanja
+								pogledajte <a href="#">ovde.</a>
+							</li>
+
+						</ul>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-12">
+						<h4>ZAVRŠETAK PORUČIVANJA</h4>
+						<p>Klikom na „Nastavi“ prikazaće Vam se stranica sa detaljnim
+							prikazom Vaše narudžbenice. U polje „Napomena“ možete naznačiti
+							neki bitan podatak, adresu za isporuku ukoliko nekoga želite da
+							obradujete lepim poklonom ili neku drugu informaciju koju
+							smatrate važnom. Ukoliko ste fizičko lice a pritom želite
+							poručiti robu na ime firme, možete uneti podatke firme koja vrši
+							uplatu. Proverite i potvrdite detalje kupovine.</p>
+
+						<p>Odabirom „Poruči“ potvrđujete i zaključujete kupovinu.
+							Nakon toga videćete obaveštenje da je vaša porudžbina uspešno
+							poslata.</p>
+
+						<p>Na e-mail adresu koju ste ostavili prilikom popunjavanja
+							formulara uskoro će vam stići predračun za poručene artikle. U
+							zavisnosti od odabranog načina plaćanja, nakon izvršene uplate,
+							poručenu robu ćemo Vam poslati na naznačenu adresu.</p>
+
+
+						<p>
+							Za sva dodatna pitanja možete nas kontaktirati putem e-maila:<a
+								href="#">gamingshop@thebest.com</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	</div>
+	<!-- end of container -->
+	<div th:replace="common/header :: footer" />
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

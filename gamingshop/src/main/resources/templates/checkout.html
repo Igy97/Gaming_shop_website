@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="sr" xmlns:th="http://www.w3.org/1999/xhtml"
+	xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+<title>GamingShop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- Bootstrap -->
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/header.css}" />
+
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/fontawesome-all.css}" />
+<style>
+* {
+	box-sizing: border-box;
+}
+
+.col-1 {
+	width: 8.33%;
+}
+
+.col-2 {
+	width: 16.66%;
+}
+
+.col-3 {
+	width: 25%;
+}
+
+.col-4 {
+	width: 33.33%;
+}
+
+.col-5 {
+	width: 41.66%;
+}
+
+.col-6 {
+	width: 50%;
+}
+
+.col-7 {
+	width: 58.33%;
+}
+
+.col-8 {
+	width: 66.66%;
+}
+
+.col-9 {
+	width: 75%;
+}
+
+.col-10 {
+	width: 83.33%;
+}
+
+.col-11 {
+	width: 91.66%;
+}
+
+.col-12 {
+	width: 100%;
+}
+
+[class*="col-"] {
+	float: left;
+	padding: 10px;
+}
+
+.row::after {
+	content: "";
+	clear: both;
+	display: table;
+}
+</style>
+</head>
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container-fluid"
+		style="margin: 0; margin-left: 1%; margin-right: 1%; margin-top: 8%; width: 97%; min-height: 700px;">
+
+		<div class="row" style="margin-top: 10px;">
+			<form th:action="@{/checkout}" method="post" style="width: 100%;">
+
+				<!-- Left Panel -->
+				<div class="col-4" style="margin: 0;">
+					<div class="panel panel-default" style="width: 100%;">
+						<div class="panel-body" style="width: 100%;">
+							<button type="submit" class="btn btn-primary btn-block">Naruci</button>
+							<p style="font-size: smaller;">
+								Ukoliko narucite na nasem sajtu, smatramo da prihvatate nase <a
+									href="#">uslove</a> koriscenja
+							</p>
+							<hr />
+							<h3>Racun</h3>
+							<div class="row">
+								<div class="col-7 text-left">Racun bez poreza:</div>
+								<div class="col-5 text-right">
+									<span th:text="${shoppingCart.grandTotal} + 'RSD'"></span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-7 text-left">Porez</div>
+								<div class="col-5 text-right">
+									<span th:with="tax=${shoppingCart.grandTotal*0.06}"
+										th:text="${#numbers.formatDecimal(tax, 0 ,2) + 'RSD'}"></span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-7 text-left">
+									<h4 style="color: darkred;">
+										<strong>Ukupno: </strong>
+									</h4>
+								</div>
+								<div class="col-5 text-right">
+									<h4>
+										<strong style="color: darkred;"><span
+											th:with="total=${shoppingCart.grandTotal+shoppingCart.grandTotal*0.06}"
+											th:text="${#numbers.formatDecimal(total, 0 ,2) + 'RSD'}"></span></strong>
+									</h4>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+				<!-- Checkout Info -->
+				<div class="col-md-8">
+					<div th:if="${missingRequiredField}">
+						<h5 class="alert alert-warning">Niste popunili sva polja</h5>
+					</div>
+
+					<div class="panel-group" id="accordion">
+
+						<!-- 1. Shipping Address -->
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion"
+										href="#shippingInfo"> 1. Adresa primaoca: </a>
+								</h4>
+							</div>
+							<div id="shippingInfo" class="panel-collapse collapse"
+								th:classappend="${classActiveShipping}? 'in'">
+								<div class="panel-body">
+									<table class="table" th:if="${not emptyShippingList}">
+										<thead>
+											<tr>
+												<th>Dostupne adrese primaoca:</th>
+												<th>Opcije</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="userShipping : ${userShippingList}">
+												<td th:if="${userShipping.userShippingStreet2}"
+													th:text="${userShipping.userShippingStreet1}+' '+${userShipping.userShippingStreet2}+', '+${userShipping.userShippingCity}
+												+', '+${userShipping.userShippingState}">
+												</td>
+												<td th:unless="${userShipping.userShippingStreet2}"
+													th:text="${userShipping.userShippingStreet1}+','+${userShipping.userShippingCity}
+												+', '+${userShipping.userShippingState}"></td>
+												<td><a
+													th:href="@{/setShippingAddress(userShippingId=${userShipping.id})}">uzmi
+														ovu adresu</a></td>
+											</tr>
+										</tbody>
+									</table>
+
+									<div class="form-group">
+										<label for="shippingName">* Ime</label> <input type="text"
+											class="form-control" id="shippingName"
+											placeholder="Ime primaoca" name="shippingAddressName"
+											th:value="${shippingAddress.shippingAddressName}" />
+									</div>
+
+									<div class="form-group">
+										<label for="shippingStreet">* Adresa ulice</label> <input
+											type="text" class="form-control" id="shippingStreet"
+											placeholder="Adresa ulice 1" name="shippingAddressStreet1"
+											th:value="${shippingAddress.shippingAddressStreet1}" />
+									</div>
+									<div class="form-group">
+										<input type="text" class="form-control"
+											placeholder="Adresa ulice 2" name="shippingAddressStreet2"
+											th:value="${shippingAddress.shippingAddressStreet2}" />
+									</div>
+
+									<div class="row">
+										<div class="col-4">
+											<div class="form-group">
+												<label for="shippingCity">* Grad</label> <input type="text"
+													class="form-control" id="shippingCity" placeholder="Grad"
+													th:name="shippingAddressCity" required="required"
+													th:value="${shippingAddress.shippingAddressCity}" />
+											</div>
+										</div>
+										<div class="col-4">
+											<div class="form-group">
+												<label for="shippingState">* Drzava</label> <select
+													id="shippingState" class="form-control"
+													th:name="shippingAddressState"
+													th:value="${shippingAddress.shippingAddressState}"
+													required="required">
+													<option value="" disabled="disabled">Izaberite
+														opciju</option>
+													<option th:each="state : ${stateList}" th:text="${state}"
+														th:selected="(${shippingAddress.shippingAddressState}==${state})"></option>
+												</select>
+											</div>
+										</div>
+										<div class="col-4">
+											<div class="form-group">
+												<label for="shippingZipcode">* Zipcode</label> <input
+													type="text" class="form-control" id="shippingZipcode"
+													placeholder="Shipping Zipcode"
+													th:name="shippingAddressZipcode" required="required"
+													th:value="${shippingAddress.shippingAddressZipcode}" />
+											</div>
+										</div>
+									</div>
+									<a data-toggle="collapse" data-parent="#accordion"
+										class="btn btn-primary pull-right" href="#paymentInfo"
+										style="width: 90%; margin-left: 5%; margin-right: 5%;">Dalje</a>
+								</div>
+							</div>
+						</div>
+
+						<!-- Payment Information -->
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion"
+										href="#paymentInfo"> 2. Placanje </a>
+								</h4>
+							</div>
+
+							<div id="paymentInfo" class="panel-collapse collapse"
+								th:classappend="${classActivePayment}? 'in'">
+								<div class="panel-body">
+									<table class="table" th:if="${not emptyPaymentList}">
+										<thead>
+											<tr>
+												<th>Dostupne platne kartice</th>
+												<th>Opcije</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="userPayment : ${userPaymentList}">
+												<td th:text="${userPayment.cardName}"></td>
+												<td><a
+													th:href="@{/setPaymentMethod(userPaymentId=${userPayment.id})}">izaberi
+														ovo placanje</a></td>
+											</tr>
+										</tbody>
+									</table>
+
+									<!-- Credit Card Information -->
+									<div class="row">
+										<div class="col-12">
+											<img src="/images/creditcard.png" class="img-responsive" /><br />
+											<div class="form-group">
+												<label for="cardType">* Izaberi vrstu kartice: </label> <select
+													class="form-control" id="cardType" name="type"
+													th:value="${payment.type}">
+													<option value="visa">Visa</option>
+													<option value="mastercard">Mastercard</option>
+													<option value="discover">Discover</option>
+													<option value="amex">American Express</option>
+												</select>
+											</div>
+
+											<div class="form-group">
+												<label for="cardHolder">* Ime vlasnika kartice:</label> <input
+													type="text" class="form-control" id="cardHolder"
+													required="required" placeHolder="Ime vlasnika kartice"
+													th:name="holderName" th:value="${payment.holderName}" />
+											</div>
+											<div class="form-group">
+												<label for="cardNumber">* Broj kartice:</label>
+												<div class="input-group">
+													<input type="tel" class="form-control" id="cardNumber"
+														required="required" placeHolder="Broj kartice"
+														th:name="cardNumber" th:value="${payment.cardNumber}" />
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-7">
+											<div class="form-group">
+												<label>* Datum isteka kartice</label>
+												<div class="row">
+													<div class="col-6">
+														<select class="form-control" name="expiryMonth"
+															required="required" th:value="${payment.expiryMonth}">
+															<option disabled="disabled">-- Month --</option>
+															<option value="01">Jan (01)</option>
+															<option value="02">Feb (02)</option>
+															<option value="03">Mar (03)</option>
+															<option value="04">Apr (04)</option>
+															<option value="05">May (05)</option>
+															<option value="06">June (06)</option>
+															<option value="07">July (07)</option>
+															<option value="08">Aug (08)</option>
+															<option value="09">Sep (09)</option>
+															<option value="10">Oct (10)</option>
+															<option value="11">Nov (11)</option>
+															<option value="12">Dec (12)</option>
+														</select>
+													</div>
+													<div class="col-6">
+														<select class="form-control" name="expiryYear"
+															id="expiryYear" th:value="${payment.expiryYear}">
+															<option disabled="disabled">-- Year --</option>
+															<option value="2017">2017</option>
+															<option value="2018">2018</option>
+															<option value="19">2019</option>
+															<option value="20">2020</option>
+															<option value="21">2021</option>
+															<option value="22">2022</option>
+															<option value="23">2023</option>
+															<option value="23">2024</option>
+															<option value="23">2025</option>
+															<option value="23">2026</option>
+															<option value="23">2027</option>
+															<option value="23">2028</option>
+															<option value="23">2029</option>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-5 mt-2">
+											<div class="form-group">
+												<label for="cardCVC">CV Code</label><br> <input
+													id="cardCVC" type="tel" class="form-control"
+													style="margin: 0;" name="cvc" placeholder="CVC"
+													th:name="cvc" th:value="${payment.cvc}" />
+											</div>
+										</div>
+									</div>
+
+
+									<!-- Billing Address -->
+									<div class="checkbox">
+										<label> <input id="theSameAsShippingAddress"
+											type="checkbox" name="billingSameAsShipping" value="true" />
+											Ista adresa kao i adresa primaoca
+										</label>
+									</div>
+
+									<div class="form-group">
+										<label for="billingName">* Ime</label> <input type="text"
+											class="form-control billingAddress" id="billingName"
+											placeholder="Ime primaoca" th:name="billingAddressName"
+											required="required"
+											th:value="${billingAddress.billingAddressName}" />
+									</div>
+									<div class="form-group">
+										<label for="billingAddress">* Adresa ulice</label> <input
+											type="text" class="form-control billingAddress"
+											id="billingAddress" placeholder="Adresa ulice 1"
+											th:name="billingAddressStreet1" required="required"
+											th:value="${billingAddress.billingAddressStreet1}" /> <input
+											type="text" class="form-control billingAddress"
+											id="billingAddress" placeholder="Adresa ulice 2"
+											th:name="billingAddressStreet2"
+											th:value="${billingAddress.billingAddressStreet2}" />
+									</div>
+
+									<div class="row">
+										<div class="col-4">
+											<div class="form-group">
+												<label for="billingCity">* Grad</label> <input type="text"
+													class="form-control billingAddress" id="billingCity"
+													placeholder="Grad" th:name="billingAddressCity"
+													required="required"
+													th:value="${billingAddress.billingAddressCity}" />
+											</div>
+										</div>
+										<div class="col-4">
+											<div class="form-group">
+												<label for="billingState">* Drzava</label> <select
+													id="billingState" class="form-control billingAddress"
+													th:name="billingAddressState"
+													th:value="${billingAddress.billingAddressState}"
+													required="required">
+													<option value="" disabled="disabled">Izaberite
+														opciju</option>
+													<option th:each="state : ${stateList}" th:text="${state}"
+														th:selected="(${billingAddress.billingAddressState}==${state})"></option>
+												</select>
+											</div>
+										</div>
+										<div class="col-4">
+											<div class="form-group">
+												<label for="billingZipcode">* Zipcode</label> <input
+													type="text" class="form-control billingAddress"
+													id="billingZipcode" placeholder="Zipcode"
+													th:name="billingAddressZipcode" required="required"
+													th:value="${billingAddress.billingAddressZipcode}" />
+											</div>
+										</div>
+									</div>
+
+									<a data-toggle="collapse" data-parent="#accordion"
+										class="btn btn-primary pull-right" href="#reviewItems"
+										style="width: 90%; margin-left: 5%; margin-right: 5%;">Dalje</a>
+								</div>
+							</div>
+						</div>
+
+						<!-- 3. Review Items and Shipping -->
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion"
+										href="#reviewItems"> 3. Spisak proizvoda </a>
+								</h4>
+							</div>
+							<div id="reviewItems" class="panel-collapse collapse">
+								<div class="panel-body">
+									<h4>Vrsta dostave:</h4>
+									<div class="radio">
+										<label> <input type="radio" name="shippingMethod"
+											value="groundShipping" checked="checked" /> Posta
+										</label>
+									</div>
+									<div class="radio">
+										<label> <input type="radio" name="shippingMethod"
+											value="premiumShipping" /> Brza posta
+										</label>
+									</div>
+
+									<div class="row">
+										<div class="col-8">
+											<h4>Proizvodi</h4>
+										</div>
+										<div class="col-2">
+											<h4>Cena</h4>
+										</div>
+										<div class="col-2">
+											<h4>Kolicina</h4>
+										</div>
+									</div>
+
+									<!-- display products in cart -->
+									<div class="" th:each="cartItem : ${cartItemList}">
+										<form th:action="@{/shoppingCart/updateCartItem}"
+											style="width: 98%;" method="post">
+											<hr />
+
+											<div th:if="${cartItem.laptop}" class="row">
+												<div class="col-2">
+													<a
+														href="'/offers/laptop/laptopDetail?id=' + ${cartItem.laptop.id}">
+														<img style="width: 80%; margin-left: 20px;"
+														class="img-responsive shelf-book center-block"
+														th:src="'https://springtestbyigy97.azurewebsites.net'+'/images/laptop/'+${cartItem.laptop.id}+'.jpg'" />
+													</a>
+												</div>
+
+												<div class="col-6">
+													<div style="margin-left: 50px;">
+														<a th:href="@{/bookDetail?id=}+${cartItem.laptop.id}"><h4
+																th:text="${cartItem.laptop.title}"></h4></a>
+														<p th:if="${cartItem.laptop.inStockNumber&gt;10}"
+															style="color: green;">Na lageru</p>
+														<p
+															th:if="${cartItem.laptop.inStockNumber&lt;10 and cartItem.laptop.inStockNumber&gt;0}"
+															style="color: green;">
+															Ukupno : <span th:text="${cartItem.laptop.inStockNumber}"></span>
+															na lageru
+														</p>
+														<p th:if="${cartItem.laptop.inStockNumber==0}"
+															style="color: darkred;">Prozivod vise nije dostupan</p>
+														<a
+															th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}">obrisi</a>
+													</div>
+												</div>
+
+												<div class="col-2" style="padding: 0;">
+													<h5
+														style="color: #db3208; font-size: large; margin-left: 10px;">
+														<span th:text="${cartItem.laptop.ourPrice} + 'RSD'"
+															th:style="${cartItem.laptop.inStockNumber}==0? 'text-decoration: line-through' : ''"></span>
+													</h5>
+												</div>
+
+												<div class="col-2" style="padding: 0;">
+													<input hidden="hidden" name="id" th:value="${cartItem.id}" />
+													<input th:id="${cartItem.id}" th:name="qty"
+														th:disabled="${cartItem.laptop.inStockNumber==0}"
+														class="form-control cartItemQty"
+														th:value="${cartItem.qty}" style="width: 93%;" />
+													<button style="display: none;"
+														th:id="'update-item-'+${cartItem.id}" type="submit"
+														class="btn btn-warning btn-xs">Update</button>
+												</div>
+											</div>
+
+
+											<div th:if="${cartItem.processor}" class="row">
+												<div class="col-2">
+													<a
+														href="'/offers/processor/processorDetail?id=' + ${cartItem.processor.id}">
+														<img style="width: 80%; margin-left: 20px;"
+														class="img-responsive shelf-book center-block"
+														th:src="'https://springtestbyigy97.azurewebsites.net'+'/images/processor/'+${cartItem.processor.id}+'.jpg'" />
+													</a>
+												</div>
+
+												<div class="col-6">
+													<div style="margin-left: 50px;">
+														<a th:href="@{/bookDetail?id=}+${cartItem.processor.id}"><h4
+																th:text="${cartItem.processor.title}"></h4></a>
+														<p th:if="${cartItem.processor.inStockNumber&gt;10}"
+															style="color: green;">Na lageru</p>
+														<p
+															th:if="${cartItem.processor.inStockNumber&lt;10 and cartItem.processor.inStockNumber&gt;0}"
+															style="color: green;">
+															Ukupno: <span
+																th:text="${cartItem.processor.inStockNumber}"></span> na
+															lageru
+														</p>
+														<p th:if="${cartItem.processor.inStockNumber==0}"
+															style="color: darkred;">Proizvod vise nije dostupan</p>
+														<a
+															th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}">obrisi</a>
+													</div>
+												</div>
+
+												<div class="col-2" style="padding: 0;">
+													<h5
+														style="color: #db3208; font-size: large; margin-left: 10px;">
+														<span th:text="${cartItem.processor.ourPrice} + 'RSD'"
+															th:style="${cartItem.processor.inStockNumber}==0? 'text-decoration: line-through' : ''"></span>
+													</h5>
+												</div>
+
+												<div class="col-2" style="padding: 0;">
+													<input hidden="hidden" name="id" th:value="${cartItem.id}" />
+													<input th:id="${cartItem.id}" th:name="qty"
+														th:disabled="${cartItem.processor.inStockNumber==0}"
+														class="form-control cartItemQty"
+														th:value="${cartItem.qty}" style="width: 93%;" />
+													<button style="display: none;"
+														th:id="'update-item-'+${cartItem.id}" type="submit"
+														class="btn btn-warning btn-xs">Update</button>
+												</div>
+											</div>
+
+
+
+											<div th:if="${cartItem.graphics_Card}" class="row">
+												<div class="col-2">
+													<a
+														href="'/offers/graphhics_card/graphics_cardDetail?id=' + ${cartItem.graphics_Card.id}">
+														<img style="width: 80%; margin-left: 20px;"
+														class="img-responsive shelf-book center-block"
+														th:src="'https://springtestbyigy97.azurewebsites.net'+'/images/graphics_card/'+${cartItem.graphics_Card.id}+'.jpg'" />
+													</a>
+												</div>
+
+												<div class="col-6">
+													<div style="margin-left: 50px;">
+														<a
+															href="'/offers/graphhics_card/graphics_cardDetail?id=' + ${cartItem.graphics_Card.id}"><h4
+																th:text="${cartItem.graphics_Card.title}"></h4></a>
+														<p th:if="${cartItem.graphics_Card.inStockNumber&gt;10}"
+															style="color: green;">Na lageru</p>
+														<p
+															th:if="${cartItem.graphics_Card.inStockNumber&lt;10 and cartItem.graphics_Card.inStockNumber&gt;0}"
+															style="color: green;">
+															Ukupno: <span
+																th:text="${cartItem.graphics_Card.inStockNumber}"></span>
+															na lageru
+														</p>
+														<p th:if="${cartItem.graphics_Card.inStockNumber==0}"
+															style="color: darkred;">Proizvod vise nije dostupan</p>
+														<a
+															th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}">obrisi</a>
+													</div>
+												</div>
+
+												<div class="col-2" style="padding: 0;">
+													<h5
+														style="color: #db3208; font-size: large; margin-left: 10px;">
+														<span th:text="${cartItem.graphics_Card.ourPrice} + 'RSD'"
+															th:style="${cartItem.graphics_Card.inStockNumber}==0? 'text-decoration: line-through' : ''"></span>
+													</h5>
+												</div>
+
+												<div class="col-2" style="padding: 0;">
+													<input hidden="hidden" name="id" th:value="${cartItem.id}" />
+													<input th:id="${cartItem.id}" th:name="qty"
+														th:disabled="${cartItem.graphics_Card.inStockNumber==0}"
+														class="form-control cartItemQty"
+														th:value="${cartItem.qty}" style="width: 93%;" />
+													<button style="display: none;"
+														th:id="'update-item-'+${cartItem.id}" type="submit"
+														class="btn btn-warning btn-xs">Update</button>
+												</div>
+											</div>
+
+
+											<div th:if="${cartItem.motherboard}" class="row">
+												<div class="col-2">
+													<a
+														href="'/offers/motherboard/motherboardDetail?id=' + ${cartItem.motherboard.id}">
+														<img style="width: 80%; margin-left: 20px;"
+														class="img-responsive shelf-book center-block"
+														th:src="'https://springtestbyigy97.azurewebsites.net'+'/images/motherboard/'+${cartItem.motherboard.id}+'.jpg'" />
+													</a>
+												</div>
+
+												<div class="col-6">
+													<div style="margin-left: 50px;">
+														<a
+															href="'/offers/motherboard/motherboardDetail?id=' + ${cartItem.motherboard.id}"><h4
+																th:text="${cartItem.motherboard.title}"></h4></a>
+														<p th:if="${cartItem.motherboard.inStockNumber&gt;10}"
+															style="color: green;">Na lageru</p>
+														<p
+															th:if="${cartItem.motherboard.inStockNumber&lt;10 and cartItem.motherboard.inStockNumber&gt;0}"
+															style="color: green;">
+															Ukupno: <span
+																th:text="${cartItem.motherboard.inStockNumber}"></span>
+															na lageru
+														</p>
+														<p th:if="${cartItem.motherboard.inStockNumber==0}"
+															style="color: darkred;">Proizvod vise nije dostupan</p>
+														<a
+															th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}">obrisi</a>
+													</div>
+												</div>
+
+												<div class="col-2" style="padding: 0;">
+													<h5
+														style="color: #db3208; font-size: large; margin-left: 10px;">
+														<span th:text="${cartItem.motherboard.ourPrice} + 'RSD'"
+															th:style="${cartItem.motherboard.inStockNumber}==0? 'text-decoration: line-through' : ''"></span>
+													</h5>
+												</div>
+
+												<div class="col-2" style="padding: 0;">
+													<input hidden="hidden" name="id" th:value="${cartItem.id}" />
+													<input th:id="${cartItem.id}" th:name="qty"
+														th:disabled="${cartItem.motherboard.inStockNumber==0}"
+														class="form-control cartItemQty"
+														th:value="${cartItem.qty}" style="width: 93%;" />
+													<button style="display: none;"
+														th:id="'update-item-'+${cartItem.id}" type="submit"
+														class="btn btn-warning btn-xs">Update</button>
+												</div>
+											</div>
+
+
+											<div th:if="${cartItem.pc_Case}" class="row">
+												<div class="col-2">
+													<a
+														href="'/offers/pc_case/pc_caseDetail?id=' + ${cartItem.pc_Case.id}">
+														<img style="width: 80%; margin-left: 20px;"
+														class="img-responsive shelf-book center-block"
+														th:src="'https://springtestbyigy97.azurewebsites.net+'/images/pc_case/'+${cartItem.pc_Case.id}+'.jpg'" />
+													</a>
+												</div>
+
+												<div class="col-6">
+													<div style="margin-left: 50px;">
+														<a
+															href="'/offers/pc_case/pc_caseDetail?id=' + ${cartItem.pc_Case.id}"><h4
+																th:text="${cartItem.pc_Case.title}"></h4></a>
+														<p th:if="${cartItem.pc_Case.inStockNumber&gt;10}"
+															style="color: green;">Na lageru</p>
+														<p
+															th:if="${cartItem.pc_Case.inStockNumber&lt;10 and cartItem.pc_Case.inStockNumber&gt;0}"
+															style="color: green;">
+															Ukupno: <span th:text="${cartItem.pc_Case.inStockNumber}"></span>
+															na lageru
+														</p>
+														<p th:if="${cartItem.pc_Case.inStockNumber==0}"
+															style="color: darkred;">Proizvod vise nije dostupan</p>
+														<a
+															th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}">obrisi</a>
+													</div>
+												</div>
+
+												<div class="col-2" style="padding: 0;">
+													<h5
+														style="color: #db3208; font-size: large; margin-left: 10px;">
+														<span th:text="${cartItem.pc_Case.ourPrice} + 'RSD'"
+															th:style="${cartItem.pc_Case.inStockNumber}==0? 'text-decoration: line-through' : ''"></span>
+													</h5>
+												</div>
+
+												<div class="col-2" style="padding: 0;">
+													<input hidden="hidden" name="id" th:value="${cartItem.id}" />
+													<input th:id="${cartItem.id}" th:name="qty"
+														th:disabled="${cartItem.pc_Case.inStockNumber==0}"
+														class="form-control cartItemQty"
+														th:value="${cartItem.qty}" style="width: 93%;" />
+													<button style="display: none;"
+														th:id="'update-item-'+${cartItem.id}" type="submit"
+														class="btn btn-warning btn-xs">Update</button>
+												</div>
+											</div>
+
+											<div th:if="${cartItem.game}" class="row">
+												<div class="col-2">
+													<a
+														href="'/offers/game/gameDetail?id=' + ${cartItem.game.id}">
+														<img style="width: 80%; margin-left: 20px;"
+														class="img-responsive shelf-book center-block"
+														th:src="'https://springtestbyigy97.azurewebsites.net'+'/images/game/'+${cartItem.game.id}+'.jpg'" />
+													</a>
+												</div>
+
+												<div class="col-6">
+													<div style="margin-left: 50px;">
+														<a
+															href="'/offers/game/gameDetail?id=' + ${cartItem.game.id}"><h4
+																th:text="${cartItem.game.title}"></h4></a>
+														<p th:if="${cartItem.game.inStockNumber&gt;10}"
+															style="color: green;">Na lageru</p>
+														<p
+															th:if="${cartItem.game.inStockNumber&lt;10 and cartItem.game.inStockNumber&gt;0}"
+															style="color: green;">
+															Ukupno: <span th:text="${cartItem.game.inStockNumber}"></span>
+															na lageru
+														</p>
+														<p th:if="${cartItem.game.inStockNumber==0}"
+															style="color: darkred;">Proizvod vise nije dostupan</p>
+														<a
+															th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}">obrisi</a>
+													</div>
+												</div>
+
+												<div class="col-2" style="padding: 0;">
+													<h5
+														style="color: #db3208; font-size: large; margin-left: 10px;">
+														<span th:text="${cartItem.game.ourPrice} + 'RSD'"
+															th:style="${cartItem.game.inStockNumber}==0? 'text-decoration: line-through' : ''"></span>
+													</h5>
+												</div>
+
+												<div class="col-2" style="padding: 0;">
+													<input hidden="hidden" name="id" th:value="${cartItem.id}" />
+													<input th:id="${cartItem.id}" th:name="qty"
+														th:disabled="${cartItem.game.inStockNumber==0}"
+														class="form-control cartItemQty"
+														th:value="${cartItem.qty}" style="width: 93%;" />
+													<button style="display: none;"
+														th:id="'update-item-'+${cartItem.id}" type="submit"
+														class="btn btn-warning btn-xs">Update</button>
+												</div>
+											</div>
+
+
+
+
+										</form>
+									</div>
+
+									<hr />
+									<h4 class="col-12 text-right">
+										<strong style="font-size: large;">Ukupno (<span
+											th:text="${'kolicina:' + #lists.size(cartItemList)}"></span>):
+										</strong> <span style="color: #db3208; font-szie: large;"><span
+											th:text="${shoppingCart.grandTotal} + 'RSD'"></span></span>
+									</h4>
+									<br /> <br />
+									<button type="submit" class="btn btn-primary btn-block">Naruci</button>
+									<p style="font-size: smaller;">
+										Ukoliko narucite na nasem sajtu, smatramo da prihvatate nase <a
+											href="#">uslove</a> koriscenja
+									</p>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- end of container -->
+
+	<div th:replace="common/header :: footer" />
+	<div th:replace="common/header :: body-bottom-scripts" />
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+		integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+		crossorigin="anonymous"></script>
+	<script type="text/javascript" src="/js/scripts.js"></script>
+</body>
+</html>

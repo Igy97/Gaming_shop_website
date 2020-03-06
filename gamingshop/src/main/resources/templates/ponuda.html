@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="sr" xmlns:th="http://www.w3.org/1999/xhtml"
+	xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+<title>GamingShop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- Bootstrap -->
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../css/header.css">
+<link rel="stylesheet" type="text/css" href="../css/ponuda.css">
+<link rel="stylesheet" type="text/css" href="../css/fontawesome-all.css">
+</head>
+<body>
+	<div th:replace="common/header :: navbar" />
+
+
+	<div class="container-fluid p-0 odvoj_od_menija">
+		<div class="row bg-primary m-0">
+
+
+
+
+			<div class=" col-sm-6 col-lg-4 p-0 ponuda">
+				<a th:href="@{/offers/laptop}"> <img src="/images/meni_p.png">
+					<h2 class="p-0 m-0 text-center">Laptopovi</h2>
+				</a>
+			</div>
+
+
+
+			<div class="col-sm-6 col-lg-4 p-0 ponuda">
+				<a th:href="@{/offers/graphics_card}"> <img
+					src="/images/gpu.png">
+					<h2 class="p-0 m-0 text-center">Grafičke</h2>
+				</a>
+
+			</div>
+
+			<div class="col-sm-6 col-lg-4 p-0 ponuda">
+				<a th:href="@{/offers/processor}"> <img src="/images/cpu.png">
+					<h2 class="p-0 m-0 text-center">Procesori</h2>
+				</a>
+
+			</div>
+
+
+			<div class="col-sm-6 col-lg-4 p-0 ponuda">
+				<a th:href="@{/offers/game}"> <img src="/images/gaming2.png">
+					<h2 class="p-0 m-0 text-center">Igrice</h2>
+				</a>
+
+			</div>
+
+			<div class="col-sm-6 col-lg-4 p-0 ponuda">
+				<a th:href="@{/offers/motherboard}"> <img
+					src="/images/motherboard.png">
+					<h2 class="p-0 m-0 text-center">Matične ploce</h2>
+				</a>
+
+			</div>
+
+			<div class="col-sm-6 col-lg-4 p-0 ponuda">
+				<a th:href="@{/offers/pc_case}"> <img src="/images/case.png">
+					<h2 class="p-0 m-0 text-center">Kućišta</h2>
+				</a>
+			</div>
+
+
+		</div>
+	</div>
+
+
+	<div th:replace="common/header :: footer" />
+	<div th:replace="common/header :: body-bottom-scripts" />
+	<script type="text/javascript">
+		var items = document.getElementsByClassName("nav-link");
+		items[1].classList.add("aktivna");
+	
+	</script>
+
+</body>
+</html>

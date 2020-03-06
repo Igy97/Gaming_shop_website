@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+	
+	<div class="container">
+		<div>
+			<ol class="breadcrumb">
+				<li><a th:href="@{/pc_case/pc_caseList}"><i class="fa fa-long-arrow-left" aria-hidden="true"></i>Vrati se</a></li>
+				<li><a th:href="@{/pc_case/updatepc_case?id=}+${pc_case.id}">Edit</a></li>
+			</ol>
+			
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-3">
+				<div class="panel panel-default">
+				<div class="panel-body">
+					<img th:src="'https://springtestbyigy97.azurewebsites.net/images/pc_case/'+${pc_case.id}+'.jpg'" class="img-responsive center-block" />
+				</div>
+				</div>
+			</div>
+			<div class="col-xs-9">
+				<h3 th:text="${pc_case.title}"></h3>
+				<div class="row">
+					<div class="col-xs-6">
+						<p><strong>Proizvodjac: </strong><span th:text="${pc_case.manufacturer}"></span></p>
+						<p><strong>Tip kucista: </strong><span th:text="${pc_case.type_of_case}"></span></p>
+						<p><strong>Tip za maticnu plocu: </strong><span th:text="${pc_case.type_of_motherboard}"></span></p>
+						<p><strong>Providna strana</strong><span th:text="${pc_case.transparent_side}"></span></p>
+						<p><strong>Materijal: </strong><span th:text="${pc_case.material}"></span></p>		
+					</div>
+					<div class="col-xs-6">
+						<p><strong>Broj usb-a: </strong><span th:text="${pc_case.number_of_usb}"></span></p>
+						<p><strong>Garancija: </strong><span th:text="${pc_case.warranty}"></span></p>
+						<p><strong>Trzisna cena: </strong><span th:text="${pc_case.listPrice}"></span></p>
+						<p><strong>Nasa cena: </strong><span th:text="${pc_case.ourPrice}"></span></p>
+						<p><strong>Broj proizvoda na lageru: </strong><span th:text="${pc_case.inStockNumber}"></span></p>
+					</div>
+				</div>
+				
+				<p><Strong>Opis: </Strong><span th:utext="${pc_case.description}"></span></p>
+			</div>
+			
+		</div>
+	</div>
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>
